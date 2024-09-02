@@ -3,6 +3,7 @@
 ##  * Francisco Eduardo Perez Berlanga 
 ##  * Paulo de Jesus Ibarra Carballo 
 ##  * Claudio Patricio Cantú Alanís
+##  * Pedro Alejandro Rodriguez Gonzalez
 ## Clase:
 ##  *Construccion de software y toma de decisiones
 ## GRUPO 401
@@ -11,3 +12,4 @@
 ## a00837418@tec.mx 
 ## a00837745@tec.mx
 ## a00835868@tec.mx
+## a00837473@tec.mx
