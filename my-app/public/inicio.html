@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TMDV</title>
+    <title>TMDV - Plataforma de Compensaciones</title>
     <link rel="stylesheet" href="style_inicio.css">
-        
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -18,67 +18,77 @@
                 <li><a href="Videojuego.html">Videojuego</a></li>
                 <li><a href="compensaciones.html">Compensaciones</a></li>
                 <li><a href="calendario.html">Calendario</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
             </ul>
-            <div class="top-right-links">  
-                <a href="contacto.html">Contacto</a>
+            <div class="top-right-links">
+                <a href="#">Iniciar Sesión</a>
             </div>
         </nav>
     </header>
 
-
     <main>
-        <section class="slogan">
-            <h1>Inicio</h1>
-            <h2>Aquí se explicará cada aspecto incluido en la plataforma que funciona a modo de recordatorio</h2>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Bienvenido a la Plataforma de Compensaciones</h1>
+                <p>Gestiona tus beneficios y diviértete aprendiendo sobre ellos.</p>
+                <a href="compensaciones.html" class="cta-button">Explora tus Compensaciones</a>
+            </div>
         </section>
 
-
-        <section class="banner">
-            <div class="banner-content">
-                <div class="text">
-                    <h1>Videojuego</h1>
-                    <p>¡Aprende sobre tus compensaciones y diviértete!</p>
+        <section class="features">
+            <h2>Nuestras Funcionalidades</h2>
+            <div class="feature-cards">
+                <div class="card">
+                    <img src="1/videojuego_inicio.png" alt="Videojuego">
+                    <h3>Videojuego Interactivo</h3>
+                    <p>Aprende sobre tus compensaciones a través de un divertido videojuego.</p>
+                    <a href="Videojuego.html" class="card-button">Jugar Ahora</a>
                 </div>
-                <div class="image">
-                    <img src="1/videojuego_inicio.png" alt="videojuego_inicio">
+                <div class="card">
+                    <img src="1/kianegro.png" alt="Compensaciones">
+                    <h3>Compensaciones</h3>
+                    <p>Consulta y gestiona tus beneficios en Kia.</p>
+                    <a href="compensaciones.html" class="card-button">Ver Beneficios</a>
+                </div>
+                <div class="card">
+                    <img src="1/calendario.png" alt="Calendario">
+                    <h3>Calendario</h3>
+                    <p>Revisa fechas importantes y eventos en Kia.</p>
+                    <a href="calendario.html" class="card-button">Consultar Fechas</a>
                 </div>
             </div>
         </section>
 
-        <section class="banner2">
-            <div class="banner-content">
-                <div class="text">
-                    <h1>Compensaciones</h1>
-                    <p>¡Consulta tus beneficios y compensaciones en Kia!</p>
-                </div>
-                <div class="image">
-                    <img src="1/kianegro.png" alt="kianegro">
-                </div>
-            </div>
+        <section class="about-us">
+            <h2>Sobre Nosotros</h2>
+            <p>En Kia, nos comprometemos a ofrecer las mejores compensaciones y beneficios a nuestros empleados. Nuestra plataforma está diseñada para facilitar la consulta y gestión de tus compensaciones de manera intuitiva y entretenida.</p>
         </section>
 
-        <section class="banner3">
-            <div class="banner-content">
-                <div class="text">
-                    <h1>Calendario</h1>
-                    <p>¡Consulta fechas importantes dentro de esta gran familia!</p>
-                </div>
-                <div class="image">
-                    <img src="1/calendario.png" alt="calendario">
-                </div>
-            </div>
+        <section class="contact">
+            <h2>Contáctanos</h2>
+            <form action="contacto.php" method="post">
+                <label for="name">Nombre:</label>
+                <input type="text" id="name" name="name" required>
+                
+                <label for="email">Correo Electrónico:</label>
+                <input type="email" id="email" name="email" required>
+                
+                <label for="message">Mensaje:</label>
+                <textarea id="message" name="message" rows="4" required></textarea>
+                
+                <button type="submit" class="submit-button">Enviar</button>
+            </form>
         </section>
 
         <section class="chatbox">
-            <p>Bienvenido a KIA México. ¿Cómo podemos ayudarte hoy?</p>
-            <button class="chat-button">Chatear</button>
-            <button class="no-chat-button">Ahora no</button>
+            <p>¿Necesitas ayuda? ¡Estamos aquí para ayudarte!</p>
+            <button class="chat-button">Chatear Ahora</button>
         </section>
     </main>
 
-
     <footer>
-        <p>Este sitio utiliza cookies para mejorar tu experiencia de usuario. Para más información consulta nuestra <a href="#">Política de Cookies</a>.</p>
+        <p>&copy; 2024 KIA México. Todos los derechos reservados.</p>
+        <p>Este sitio utiliza cookies. Para más información, consulta nuestra <a href="#">Política de Cookies</a>.</p>
     </footer>
 </body>
 </html>
