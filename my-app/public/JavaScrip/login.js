@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Aquí deberías agregar la lógica para autenticar al usuario
         // Para el propósito de este ejemplo, usaremos un simple almacenamiento local para la autenticación
 
-        if (username === '1' && password === '1') {
+        if (username === '2' && password === '1') {
             localStorage.setItem('loggedIn', 'true');
             window.location.href = 'Página.html'; // Redirige al usuario a la página principal
         } else {

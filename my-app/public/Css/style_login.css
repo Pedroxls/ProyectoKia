@@ -1,44 +1,72 @@
-body {
+/* Reset general para mantener consistencia en navegadores */
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilos del cuerpo */
+body {
     font-family: "Kia Signature Regular", sans-serif;
-    background-image: url("Fondos_Login/2.jpg");
-    background-size: cover;
-    background-position: center;
+    color: #333;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    color: #333;
-    flex-direction: column;
+    height: 100vh;
     position: relative;
+    overflow: hidden; /* Evita que el contenido se desborde */
 }
 
-header .logo-container {
+/* Estilos del video de fondo */
+#background-video {
     position: absolute;
-    top: 100px;
-    left: 100px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que el video cubra todo el fondo sin distorsionarse */
+    z-index: -1; /* Envía el video detrás del contenido */
+}
+
+/* Contenedor del logo */
+header {
+    position: absolute;
+    top: 11%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
 }
 
 .kia-logo {
-    width: 300px; /* Tamaño pequeño para la imagen */
+    width: 250px;
     height: auto;
 }
 
-.login-container {
-    background-color: rgba(255, 255, 255, 0.7); /* Fondo blanco con 70% de opacidad */
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+/* Contenedor de autenticación */
+.auth-container {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 20px;
+    border-radius: 50px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
     text-align: center;
-    max-width: 400px;
-    width: 100%;
+    max-width: 450px;
+    width: 50%;
     margin: 20px;
 }
 
+/* Ocultar formularios que no están activos */
+.form-container {
+    display: none;
+}
+
+.form-container.active {
+    display: block;
+}
+
 h1 {
-    font-size: 32px; /* Aumenta el tamaño del título */
-    margin-bottom: 20px;
-    color: #444;
+    font-size: 34px;
+    margin-bottom: 24px;
+    color: #333;
 }
 
 form {
@@ -47,84 +75,74 @@ form {
 }
 
 label {
-    margin-bottom: 8px;
-    font-size: 18px; /* Aumenta el tamaño del texto */
-    color: #555;
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #444;
 }
 
 input {
-    padding: 14px; /* Aumenta el tamaño del padding */
-    margin-bottom: 20px;
-    border: 1px solid #bbb;
-    border-radius: 8px;
-    font-size: 18px; /* Aumenta el tamaño del texto */
+    padding: 12px 15px;
+    margin-bottom: 25px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
     color: #333;
-    background-color: #f9f9f9;
-    transition: border-color 0.3s ease;
+    background-color: #f1f1f1;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
 input:focus {
-    border-color: #7a7a7a; /* Color más oscuro al enfocarse */
+    background-color: #fff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
     outline: none;
 }
 
 button {
-    background-color: #555;
-    color: #f7f8f5;
-    padding: 14px; /* Aumenta el tamaño del botón */
+    background-color: #007BFF;
+    color: #fff;
+    padding: 14px;
     border: none;
     border-radius: 8px;
-    font-size: 18px; /* Aumenta el tamaño del texto del botón */
+    font-size: 18px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 button:hover {
-    background-color: #7a7a7a; /* Color más claro al pasar el cursor */
-    transform: translateY(-2px); /* Efecto de elevación */
+    background-color: #0056b3;
+    transform: translateY(-3px);
+}
+
+button:active {
+    transform: translateY(0);
 }
 
 a {
     text-decoration: none;
-    color: #007BFF; /* Color azul para enlaces */
-    font-size: 18px; /* Aumenta el tamaño del texto de los enlaces */
-    margin-top: 10px;
-    display: inline-block;
+    color: #007BFF;
+    font-size: 16px;
     transition: color 0.3s ease;
 }
 
 a:hover {
-    color: #0056b3; /* Color más oscuro al pasar el cursor */
+    color: #0056b3;
 }
 
-/* Estilos para móviles */
-@media (max-width: 768px) {
-    .login-container {
-        padding: 20px;
-        margin: 10px;
-    }
-}
-
-/* Estilos para tablets */
-@media (min-width: 769px) and (max-width: 992px) {
-    .login-container {
-        max-width: 60%;
-    }
-}
-
-/* Escritorio */
-@media (min-width: 993px) {
-    .login-container {
-        max-width: 400px;
-    }
+.links {
+    display: flex;
+    justify-content: center; /* Centra los enlaces horizontalmente */
+    gap: 20px; /* Espacio entre los enlaces */
+    margin-top: 20px;
 }
 
 @font-face {
     font-family: "Kia Signature Regular";
     src: url("https://db.onlinewebfonts.com/t/f2b1aab07eb23b6d43b85a429901087a.eot");
     src: url("https://db.onlinewebfonts.com/t/f2b1aab07eb23b6d43b85a429901087a.eot?#iefix") format("embedded-opentype"),
-    url("https://db.onlinewebfonts.com/t/f2b1aab07eb23b6d43b85a429901087a.woff2") format("woff2"),
-    url("https://db.onlinewebfonts.com/t/f2b1aab07eb23b6d43b85a429901087a.woff") format("woff"),
-    url("https://db.onlinewebfonts.com/t/f2b1aab07eb23b6d43b85a429901087a.ttf") format("truetype"),
-    url("https://db.onlinewebfonts.com/t/f2b1aab07eb23b6d43b85a429901087a.svg#Kia Signature Regular") format("svg");
+         url("https://db.onlinewebfonts.com/t/f2b1aab07eb23b6d43b85a429901087a.woff2") format("woff2"),
+         url("https://db.onlinewebfonts.com/t/f2b1aab07eb23b6d43b85a429901087a.woff") format("woff"),
+         url("https://db.onlinewebfonts.com/t/f2b1aab07eb23b6d43b85a429901087a.ttf") format("truetype"),
+         url("https://db.onlinewebfonts.com/t/f2b1aab07eb23b6d43b85a429901087a.svg#Kia Signature Regular") format("svg");
 }
