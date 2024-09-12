@@ -4,112 +4,143 @@
     box-sizing: border-box;
     font-family: 'Kia Signature OTF', sans-serif;
 }
-
-
+  
 body {
     background-color: #f4f4f4;
     color: #333;
     line-height: 1.6;
+    overflow-x: hidden; /* Oculta la barra de desplazamiento horizontal */
 }
-
-
+  
 header {
-    background-color: #444;
+    background-color: #000; /* Negro */
     padding: 1rem 2rem;
     color: #fff;
-}
-
-
-.navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-
-
+  
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+  
 .logo img {
     width: 150px;
 }
-
-
+  
 .nav-links {
     list-style: none;
     display: flex;
     gap: 1.5rem;
 }
-
-
+  
 .nav-links a {
     color: #fff;
     text-decoration: none;
     font-size: 1rem;
+    font-weight: bold;
+    transition: color 0.3s ease;
 }
-
-
+  
+.nav-links a:hover {
+    color: #f3c200; /* Amarillo Kia */
+}
+  
+.top-right-links {
+    display: flex;
+    align-items: center;
+}
+  
 .top-right-links a {
     color: #fff;
     text-decoration: none;
     font-size: 1rem;
+    margin-right: 1.5rem;
 }
-
-
+  
 .slogan {
     padding: 2rem;
     background-color: #e0e0e0;
     text-align: center;
 }
-
-
+  
 .slogan h1 {
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
+    font-weight: bold;
 }
-
-
+  
 .slogan h2 {
     font-size: 1.5rem;
     color: #555;
+    font-weight: normal;
 }
-
-
+  
 .banner {
     background-color: #fff;
     padding: 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative; /* Para posicionar el elemento "Discover Kia" */
 }
-
-
+  
 .banner-content {
     display: flex;
     align-items: center;
+    width: 100%;
+    max-width: 1200px; /* Ancho máximo del contenido */
+    margin: 0 auto; /* Centra el contenido */
 }
-
-
+  
 .banner .text {
     max-width: 500px;
+    margin-right: 3rem; /* Espacio entre el texto y la imagen */
 }
-
-
+  
 .banner .text h1 {
     font-size: 2.5rem;
     color: #444;
+    font-weight: bold;
+    margin-bottom: 1rem; /* Espacio entre el título y el párrafo */
 }
-
-
+  
 .banner .text p {
     font-size: 1.2rem;
     color: #777;
+    font-weight: normal;
 }
-
-
+  
 .banner .image img {
     max-width: 400px;
     margin-left: 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra para la imagen */
 }
-
-
+  
+.discover-kia {
+    position: absolute;
+    top: 20%;
+    right: 10%;
+    background-color: #f3c200; /* Amarillo Kia */
+    color: #fff;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra para el botón */
+}
+  
+.discover-kia:hover {
+    background-color: #e2b600; /* Color más oscuro al pasar el mouse */
+}
+  
 .chatbox {
     background-color: #333;
     color: #fff;
@@ -117,14 +148,12 @@ header {
     text-align: center;
     margin-top: 2rem;
 }
-
-
+  
 .chatbox p {
     font-size: 1.2rem;
     margin-bottom: 1rem;
 }
-
-
+  
 .chatbox .chat-button,
 .chatbox .no-chat-button {
     background-color: #5d7d2b;
@@ -134,15 +163,14 @@ header {
     cursor: pointer;
     margin: 0.5rem;
     transition: background-color 0.3s ease;
+    border-radius: 5px; /* Bordes redondeados para los botones */
 }
-
-
+  
 .chatbox .chat-button:hover,
 .chatbox .no-chat-button:hover {
     background-color: #8BB532;
 }
-
-
+  
 footer {
     background-color: #333;
     color: #fff;
@@ -150,29 +178,50 @@ footer {
     text-align: center;
     margin-top: 2rem;
 }
-
-
+  
 footer a {
     color: #8BB532;
     text-decoration: none;
+    transition: color 0.3s ease;
 }
-
-
+  
 footer a:hover {
     text-decoration: underline;
 }
-
-
-/* Estilo de los enlaces del menú de navegación */
+  
+  /* Estilo de los enlaces del menú de navegación */
 .nav-links li a {
     color: #ffffff; /* Color del texto */
     text-decoration: none; /* Sin subrayado */
     font-weight: bold; /* Texto en negrita */
-    font-size: 2.5rem; /* Tamaño del texto más grande */
+    font-size: 1.2rem; /* Tamaño del texto más grande */
     transition: color 0.3s ease; /* Transición suave para el cambio de color */
 }
-
-
+  
 .nav-links li a:hover {
     color: #f3c200; /* Cambia el color cuando el mouse está sobre el enlace */
+}
+  
+  /* Responsividad */
+@media (max-width: 768px) {
+    .banner-content {
+      flex-direction: column; /* Apila el contenido en dispositivos móviles */
+      align-items: center;
+      text-align: center;
+    }
+  
+    .banner .text {
+      margin-right: 0; /* Quita el margen derecho del texto en dispositivos móviles */
+    }
+  
+    .banner .image img {
+      margin-left: 0; /* Quita el margen izquierdo de la imagen en dispositivos móviles */
+      margin-top: 2rem; /* Agrega un margen superior para la imagen en dispositivos móviles */
+    }
+  
+    .discover-kia {
+      top: 50%;
+      right: 50%;
+      transform: translate(50%, -50%); /* Centra el botón en dispositivos móviles */
+    }
 }
