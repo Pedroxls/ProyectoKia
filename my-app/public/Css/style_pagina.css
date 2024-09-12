@@ -9,11 +9,11 @@ body {
     background-color: #f4f4f4;
     color: #333;
     line-height: 1.6;
-    overflow-x: hidden; /* Oculta la barra de desplazamiento horizontal */
+    overflow-x: hidden; 
 }
   
 header {
-    background-color: #000; /* Negro */
+    background-color: #000; 
     padding: 1rem 2rem;
     color: #fff;
     display: flex;
@@ -47,7 +47,7 @@ header {
 }
   
 .nav-links a:hover {
-    color: #f3c200; /* Amarillo Kia */
+    color: #f3c200; 
 }
   
 .top-right-links {
@@ -86,27 +86,27 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative; /* Para posicionar el elemento "Discover Kia" */
+    position: relative; 
 }
   
 .banner-content {
     display: flex;
     align-items: center;
     width: 100%;
-    max-width: 1200px; /* Ancho máximo del contenido */
-    margin: 0 auto; /* Centra el contenido */
+    max-width: 1200px; 
+    margin: 0 auto; 
 }
   
 .banner .text {
     max-width: 500px;
-    margin-right: 3rem; /* Espacio entre el texto y la imagen */
+    margin-right: 3rem; 
 }
   
 .banner .text h1 {
     font-size: 2.5rem;
     color: #444;
     font-weight: bold;
-    margin-bottom: 1rem; /* Espacio entre el título y el párrafo */
+    margin-bottom: 1rem; 
 }
   
 .banner .text p {
@@ -118,14 +118,14 @@ header {
 .banner .image img {
     max-width: 400px;
     margin-left: 2rem;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra para la imagen */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
 }
   
 .discover-kia {
     position: absolute;
     top: 20%;
     right: 10%;
-    background-color: #f3c200; /* Amarillo Kia */
+    background-color: #f3c200; 
     color: #fff;
     padding: 1rem 2rem;
     border-radius: 5px;
@@ -134,11 +134,11 @@ header {
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra para el botón */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
 }
   
 .discover-kia:hover {
-    background-color: #e2b600; /* Color más oscuro al pasar el mouse */
+    background-color: #e2b600; 
 }
   
 .chatbox {
@@ -163,7 +163,7 @@ header {
     cursor: pointer;
     margin: 0.5rem;
     transition: background-color 0.3s ease;
-    border-radius: 5px; /* Bordes redondeados para los botones */
+    border-radius: 5px; 
 }
   
 .chatbox .chat-button:hover,
@@ -189,39 +189,37 @@ footer a:hover {
     text-decoration: underline;
 }
   
-  /* Estilo de los enlaces del menú de navegación */
 .nav-links li a {
-    color: #ffffff; /* Color del texto */
-    text-decoration: none; /* Sin subrayado */
-    font-weight: bold; /* Texto en negrita */
-    font-size: 1.2rem; /* Tamaño del texto más grande */
-    transition: color 0.3s ease; /* Transición suave para el cambio de color */
+    color: #ffffff; 
+    text-decoration: none; 
+    font-weight: bold; 
+    font-size: 1.2rem; 
+    transition: color 0.3s ease; 
 }
   
 .nav-links li a:hover {
-    color: #f3c200; /* Cambia el color cuando el mouse está sobre el enlace */
+    color: #f3c200; 
 }
   
-  /* Responsividad */
 @media (max-width: 768px) {
     .banner-content {
-      flex-direction: column; /* Apila el contenido en dispositivos móviles */
+      flex-direction: column; 
       align-items: center;
       text-align: center;
     }
   
     .banner .text {
-      margin-right: 0; /* Quita el margen derecho del texto en dispositivos móviles */
+      margin-right: 0; 
     }
   
     .banner .image img {
-      margin-left: 0; /* Quita el margen izquierdo de la imagen en dispositivos móviles */
-      margin-top: 2rem; /* Agrega un margen superior para la imagen en dispositivos móviles */
+      margin-left: 0; 
+      margin-top: 2rem; 
     }
   
     .discover-kia {
       top: 50%;
       right: 50%;
-      transform: translate(50%, -50%); /* Centra el botón en dispositivos móviles */
+      transform: translate(50%, -50%); 
     }
 }
