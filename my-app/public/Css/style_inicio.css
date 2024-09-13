@@ -16,27 +16,29 @@ body {
 
 /* Header and Navigation */
 header {
-    background-color: #2c3e50;
+    background-color: #000;
     color: #fff;
-    padding: 1rem 0;
+    padding: 0rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+    width: 100%;
 }
 
 .logo img {
-    height: 50px;
+    height: 150px;
 }
 
 .nav-links {
     list-style: none;
     display: flex;
+    gap: 1.5rem;
 }
 
 .nav-links li {
@@ -45,6 +47,7 @@ header {
 
 .nav-links a {
     color: #fff;
+    font-size: 2rem;
     text-decoration: none;
     font-weight: bold;
     transition: color 0.3s ease;
@@ -62,6 +65,7 @@ header {
     padding: 10px 20px;
     border-radius: 5px;
     transition: background-color 0.3s ease;
+    align-items: center;
 }
 
 .top-right-links a:hover {
@@ -70,10 +74,11 @@ header {
 
 /* Hero Section */
 .hero {
+    background-color: #e0e0e0;
     background-image: url('1/hero_background.jpg');
     background-size: cover;
     background-position: center;
-    color: #fff;
+    color: #333;
     text-align: center;
     padding: 100px 20px;
 }
@@ -113,7 +118,7 @@ header {
 .features h2 {
     margin-bottom: 40px;
     font-size: 2.5rem;
-    color: #2c3e50;
+    color: #333;
 }
 
 .feature-cards {
@@ -144,7 +149,7 @@ header {
 .card h3 {
     margin: 20px 0;
     font-size: 1.8rem;
-    color: #2c3e50;
+    color: #333;
 }
 
 .card p {
@@ -172,19 +177,19 @@ header {
 /* About Us Section */
 .about-us {
     padding: 50px 20px;
-    background-color: #fff;
+    background-color: #05141f;
     text-align: center;
 }
 
 .about-us h2 {
     font-size: 2.5rem;
-    color: #2c3e50;
+    color: #fff;
     margin-bottom: 20px;
 }
 
 .about-us p {
     font-size: 1.2rem;
-    color: #7f8c8d;
+    color: #fff;
     max-width: 800px;
     margin: 0 auto;
 }
@@ -239,10 +244,10 @@ header {
 
 /* Chatbox Section */
 .chatbox {
-    background-color: #2c3e50;
+    background-color: #05141f;
     color: #fff;
     text-align: center;
-    padding: 50px 20px;
+    padding: 20px 20px;
 }
 
 .chatbox p {
@@ -267,7 +272,7 @@ header {
 
 /* Footer */
 footer {
-    background-color: #2c3e50;
+    background-color: #05141f;
     color: #fff;
     text-align: center;
     padding: 20px 0;
