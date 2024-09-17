@@ -198,33 +198,28 @@ header {
 .chatbox {
     background-color: #05141f;
     color: #fff;
-    padding: 1rem;
     text-align: center;
-    margin-top: 0;
+    padding: 20px 20px;
 }
-
 
 .chatbox p {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
 }
 
-
-.chatbox .chat-button,
-.chatbox .no-chat-button {
-    background-color: #5d7d2b;
-    border: none;
-    padding: 0.5rem 1rem;
+.chat-button {
+    background-color: #e74c3c;
     color: #fff;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
-    margin: 0.5rem;
     transition: background-color 0.3s ease;
 }
 
-
-.chatbox .chat-button:hover,
-.chatbox .no-chat-button:hover {
-    background-color: #8BB532;
+.chat-button:hover {
+    background-color: #c0392b;
 }
 
 
