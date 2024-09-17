@@ -66,81 +66,52 @@ header {
 }
 
 
-.slogan {
-    padding: 2rem;
-    background-color: #e0e0e0;
+.contact {
+    padding: 50px 20px;
+    background-color: #ecf0f1;
     text-align: center;
 }
 
-
-.slogan h1 {
+.contact h2 {
     font-size: 2.5rem;
-    margin-bottom: 0.5rem;
+    color: #2c3e50;
+    margin-bottom: 20px;
 }
 
-
-.slogan h2 {
-    font-size: 1.5rem;
-    color: #555;
-}
-
-
-.banner {
-    background-color: #fff;
-    padding: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 1;
-    background-size: cover;
-
-}
-.text{
-    text-align: center;
-    margin: 20px auto;
-}
-
-.container {
-    max-width: 800px; /* Ajusta el ancho máximo según sea necesario */
+.contact form {
+    max-width: 600px;
     margin: 0 auto;
 }
 
-
-.banner-content {
-    display: flex;
-    align-items: center;
-}
-.banner .text {
-    text-align: center; /* Centra el texto */
+.contact form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
 }
 
-.banner .text p {
-    margin-top: 1rem; /* Agrega un margen superior al nuevo párrafo */
+.contact form input,
+.contact form textarea {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
 }
 
-
-.banner .text {
-    max-width: 500px;
-}
-
-
-.banner .text h1 {
-    font-size: 2.5rem;
-    color: #444;
-}
-
-
-.banner .text p {
+.submit-button {
+    background-color: #18bc9c;
+    color: #fff;
+    padding: 15px 30px;
     font-size: 1.2rem;
-    color: #777;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-
-.banner .image img {
-    max-width: 400px;
-    margin-left: 2rem;
+.submit-button:hover {
+    background-color: #16a085;
 }
-
 
 .chatbox {
     background-color: #05141f;
