@@ -6,6 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TMDV</title>
     <link rel="stylesheet" href="Css/style_calendario.css">
+    <style>
+        .event {
+            margin: 10px 0;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -35,29 +43,44 @@
             <h2>Consulta las fechas importantes de la empresa</h2>
         </section>
 
+        <section class="text">
+            <p>Descubre que días son feriados y cuando tenemos eventos en la empresa</p>
+            <p>Aquí próximamente se verán los eventos laborales de la empresa</p>
+        </section>
+
+        <section class="calendario">
+            <label for="date-filter">Selecciona una fecha:</label>
+            <input type="date" id="date-filter" name="date-filter">
+            <div class="events">
+                <div class="event" data-date="2024-09-20">Evento 1: 20 de septiembre de 2024</div>
+                <div class="event" data-date="2024-09-21">Evento 2: 21 de septiembre de 2024</div>
+                <div class="event" data-date="2024-09-22">Evento 3: 22 de septiembre de 2024</div>
+                <div class="event" data-date="2024-09-23">Evento 4: 23 de septiembre de 2024</div>
+            </div>
+            <script>
+                const dateFilter = document.getElementById('date-filter');
+                const events = document.querySelectorAll('.event');
         
-                <div class="text">
-                    <p>Descubre que días son feriados y cuando tenemos eventos en la empresa</p>
-                <p>Aquí próximamente se verán los eventos laborales de la empresa</p>
-            </div>
+                dateFilter.addEventListener('input', () => {
+                    const selectedDate = dateFilter.value;
+        
+                    events.forEach(event => {
+                        if (event.getAttribute('data-date') === selectedDate) {
+                            event.classList.remove('hidden');
+                        } else {
+                            event.classList.add('hidden');
+                        }
+                    });
+                });
+            </script>
         </section>
-
-        <section class="banner">
-            <div class="banner-content">
-                <img src="1/calendariolabmex.jpg" alt="Calendario">
-            </div>
-        </section>
-
-    
-
 
         <section class="chatbox">
             <p>¿Necesitas ayuda? ¡Estamos aquí para ayudarte!</p>
             <button class="chat-button">Chatear Ahora</button>
         </section>
+
     </main>
-
-
     <footer>
         <p>Este sitio utiliza cookies para mejorar tu experiencia de usuario. Para más información consulta nuestra <a href="#">Política de Cookies</a>.</p>
     </footer>
