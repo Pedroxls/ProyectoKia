@@ -83,116 +83,107 @@ header {
     color: #555;
 }
 
-
-.banner {
-    background-color: #fff;
-    padding: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* Features Section */
+.features {
+    padding: 50px 20px;
+    background-color: #ecf0f1;
+    text-align: center;
 }
 
+.features h2 {
+    margin-bottom: 40px;
+    font-size: 2.5rem;
+    color: #333;
+}
+
+.feature-cards {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 30%;
+    margin-bottom: 30px;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.card img {
+    max-width: 100%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.card h3 {
+    margin: 20px 0;
+    font-size: 1.8rem;
+    color: #333;
+}
+
+.card p {
+    color: #7f8c8d;
+    padding: 0 20px 20px;
+    font-size: 1rem;
+}
+
+.card-button {
+    display: block;
+    background-color: #18bc9c;
+    color: #fff;
+    text-align: center;
+    padding: 15px;
+    margin: 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.card-button:hover {
+    background-color: #16a085;
+}
+
+.banner, .banner2, .banner3 {
+    background-color: #e0e0e0;
+    display: none;
+    display: flex;              
+    justify-content: center;     
+    align-items: center;         
+    height: 65vh;               
+    text-align: center;          
+}
+
+h1 {
+    margin: 1rem;
+}
 
 .banner-content {
-    display: flex;
+    max-width: 600px;
+    margin: 0 auto;                        
+    display: flex;                       
     align-items: center;
+    justify-content: space-between;         
+    gap: 20px;     
 }
 
-
-.banner .text {
-    max-width: 500px;
+.banner-content .text {
+    flex: 1;   
+    text-align: left;                      
 }
 
-
-.banner .text h1 {
-    font-size: 2.5rem;
-    color: #444;
+.banner-content .image {
+    flex: 0;                         
 }
 
-
-.banner .text ul {
-    font-size: 1.2rem;
-    color: #777;
-}
-
-
-.banner .image img {
-    max-width: 400px;
-    margin-left: 2rem;
-}
-
-.banner2 {
-    background-color: #fff;
-    padding: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-
-.banner2-content {
-    display: flex;
-    align-items: center;
-}
-
-
-.banner2 .text {
-    max-width: 500px;
-}
-
-
-.banner2 .text h1 {
-    font-size: 2.5rem;
-    color: #444;
-}
-
-
-.banner2 .text ul {
-    font-size: 1.2rem;
-    color: #777;
-}
-
-
-.banner2 .image img {
-    max-width: 400px;
-    margin-left: 2rem;
-}
-
-.banner3 {
-    background-color: #fff;
-    padding: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-
-.banner3-content {
-    display: flex;
-    align-items: center;
-}
-
-
-.banner3 .text {
-    max-width: 500px;
-}
-
-
-.banner3 .text h1 {
-    font-size: 2.5rem;
-    color: #444;
-}
-
-
-.banner3 .text ul {
-    font-size: 1.2rem;
-    color: #777;
-}
-
-
-.banner3 .image img {
-    max-width: 400px;
-    margin-left: 7rem;
+.banner-content .image img {
+    max-width: 500px;                
+    height: auto;     
 }
 
 .chatbox {

@@ -35,11 +35,35 @@
             <h2>Aquí se enlistarán los beneficios que posees como parte de Kia</h2>
         </section>
 
+        <section class="features">
+            <h2>Nuestras Compensaciones</h2>
+            <div class="feature-cards">
+                <div class="card">
+                    <img src="1/médico.jpg" alt="Videojuego">
+                    <h3>Médicas</h3>
+                    <p>Aprende sobre tus compensaciones médicas dentro de Kia.</p>
+                    <a href="Videojuego.html" class="card-button">Ver ahora</a>
+                </div>
+                <div class="card">
+                    <img src="1/compensaciones.webp" alt="Compensaciones">
+                    <h3>Corporativas</h3>
+                    <p>Aprende sobre tus compensaciones corporativas dentro de Kia.</p>
+                    <a href="compensaciones.html" class="card-button">Ver ahora</a>
+                </div>
+                <div class="card">
+                    <img src="1/incentivoshort.png" alt="Calendario">
+                    <h3>Incentivos</h3>
+                    <p>Aprende sobre tus incentivos dentro de Kia.</p>
+                    <a href="calendario.html" class="card-button">Ver ahora</a>
+                </div>
+            </div>
+        </section>
 
-        <section class="banner">
+
+        <section id="medicas" class="banner">
             <div class="banner-content">
                 <div class="text">
-                    <h1>Médicos</h1>
+                    <h1>Compensaciones Médicas</h1>
                     <ul>
                         <li>SGMM</li>
                         <li>Seguro Dental</li>
@@ -58,18 +82,18 @@
             </div>
         </section>
 
-        <section class="banner2">
+        <section id="corporativas" class="banner2">
             <div class="banner-content">
                 <div class="text">
-                    <h1>Corporativos</h1>
+                    <h1>Compensaciones Corporativas</h1>
                     <ul>
-                        <li>Bonos de productividad</li>
+                        <li>Bonos de Productividad</li>
                         <li>PTU</li>
-                        <li>Vacaciones pagadas</li>
-                        <li>Vacaciones legales pagadas</li>
-                        <li>Entrenamiento y capacitación</li>
-                        <li>Trabajo remoto</li>
-                        <li>Crecimiento profesional</li>
+                        <li>Vacaciones Pagadas</li>
+                        <li>Vacaciones Legales Pagadas</li>
+                        <li>Entrenamiento y Capacitación</li>
+                        <li>Trabajo Remoto</li>
+                        <li>Crecimiento Profesional</li>
                         <li>Programa de Asistencia a Empleados</li>
                     </ul>
                 </div>
@@ -79,29 +103,59 @@
             </div>
         </section>
 
-        <section class="banner3">
+        <section id="incentivos" class="banner3">
             <div class="banner-content">
                 <div class="text">
                     <h1>Incentivos</h1>
                     <ul>
-                        <li>Descuentos corporativos</li>
-                        <li>Horario flexible</li>
+                        <li>Descuentos Corporativos</li>
+                        <li>Horario Flexible</li>
                         <li>Guardería</li>
-                        <li>Autobus de la compañia</li>
-                        <li>Auto de la compañia</li>
-                        <li>Transporte de ayuda</li>
-                        <li>Bono de comestibles</li>
-                        <li>Cafetería para empleados</li>
-                        <li>Premios de reconocimiento</li>
-                        <li>Viajes culturales</li>
-                        <li>Equipos y tecnología</li>
+                        <li>Bus de la Compañia</li>
+                        <li>Auto de la Compañia</li>
+                        <li>Transporte de Ayuda</li>
+                        <li>Bono de Comestibles</li>
+                        <li>Cafetería para Empleados</li>
+                        <li>Premios de Reconocimiento</li>
+                        <li>Viajes Culturales</li>
+                        <li>Equipo y Tecnología</li>
                     </ul>
                 </div>
                 <div class="image">
-                    <img src="1/incentivos.avif" alt="incentivos">
+                    <img src="1/incentivoshort.png" alt="incentivos">
                 </div>
             </div>
         </section>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                // Ocultar todas las secciones de compensaciones inicialmente
+                const secciones = document.querySelectorAll(".banner, .banner2, .banner3");
+                secciones.forEach(seccion => seccion.style.display = "none");
+        
+                // Añadir eventos a los botones
+                document.querySelector(".card-button[href='Videojuego.html']").addEventListener("click", function(event) {
+                    event.preventDefault();
+                    mostrarSeccion("medicas");
+                });
+        
+                document.querySelector(".card-button[href='compensaciones.html']").addEventListener("click", function(event) {
+                    event.preventDefault();
+                    mostrarSeccion("corporativas");
+                });
+        
+                document.querySelector(".card-button[href='calendario.html']").addEventListener("click", function(event) {
+                    event.preventDefault();
+                    mostrarSeccion("incentivos");
+                });
+        
+                // Función para mostrar una sección y ocultar las demás
+                function mostrarSeccion(idSeccion) {
+                    secciones.forEach(seccion => seccion.style.display = "none"); // Oculta todas las secciones
+                    document.getElementById(idSeccion).style.display = "block"; // Muestra la sección seleccionada
+                }
+            });
+        </script>
 
         <section class="chatbox">
             <p>¿Necesitas ayuda? ¡Estamos aquí para ayudarte!</p>
