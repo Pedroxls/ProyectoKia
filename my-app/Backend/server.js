@@ -24,26 +24,29 @@ app.post('/login', async (req, res) => {
     console.log('Valor recibido del formulario:', Id);
 
     try {
-        // Asegúrate de que la conexión se realice correctamente antes de la consulta
-        let pool = await sql.connect(dbConfig); // Establece una conexión
-        const request = new sql.Request(pool);  // Crea una solicitud SQL
+        let pool = await sql.connect(dbConfig); // Conectar a la base de datos
+        const request = new sql.Request(pool);  // Crear la solicitud
 
         const query = 'SELECT * FROM Usuario WHERE Id = @Id';
         const result = await request.input('Id', sql.VarChar, Id).query(query);
 
-        // Procesar los resultados de la consulta
         if (result.recordset.length > 0) {
-            res.status(200).send('Login exitoso');
+            // Si el usuario existe, redirigir a la página deseada
+            res.redirect('/pagina'); // Cambia esto por la URL a la que deseas redirigir
         } else {
+            // Si el usuario no existe
             res.status(401).send('Usuario no encontrado o ID incorrecto');
         }
     } catch (err) {
         console.error('Error en la consulta:', err);
         res.status(500).send('Error en el servidor');
     } finally {
-        // Cerrar la conexión después de la consulta
-        sql.close(); // Asegúrate de cerrar la conexión
+        sql.close(); // Cerrar la conexión
     }
+});
+
+app.get('/pagina', (req, res) => {
+    res.sendFile(__dirname + '/public/Página.html');
 });
 
 // Iniciar el servidor
