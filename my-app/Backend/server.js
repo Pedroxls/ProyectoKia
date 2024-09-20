@@ -18,6 +18,9 @@ const dbConfig = {
     }
 };
 
+// Servir archivos estáticos (como CSS, JS, imágenes)
+app.use(express.static('public')); // Servir la carpeta public
+
 // Ruta de inicio de sesión
 app.post('/login', async (req, res) => {
     const { Id } = req.body;
@@ -45,6 +48,7 @@ app.post('/login', async (req, res) => {
     }
 });
 
+// Ruta que sirve la página principal después del login
 app.get('/pagina', (req, res) => {
     res.sendFile('C:/Users/Nukat/CONSTRUCCIÓN/ProyectoKia/my-app/public/Página.html');
 });
