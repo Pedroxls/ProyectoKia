@@ -10,12 +10,11 @@
 </head>
 <body>
     
-    
-        <!-- Video de fondo -->
-        <video autoplay muted loop id="background-video">
-            <source src="1/kiavideo.mp4" type="video/mp4">
-            Tu navegador no soporta el elemento de video.
-        </video>
+    <!-- Video de fondo -->
+    <video autoplay muted loop id="background-video">
+        <source src="1/kiavideo.mp4" type="video/mp4">
+        Tu navegador no soporta el elemento de video.
+    </video>
 
     <!-- Contenedor del logo -->
     <header>
@@ -27,15 +26,15 @@
     <!-- Contenedor de las vistas (login, recuperar cuenta, crear cuenta) -->
     <div class="auth-container">
         <!-- Pantalla de inicio de sesión -->
-        <div id="login-form" class="form-container active">
+        <div id="login-container" class="form-container active">
             <h1>Iniciar Sesión</h1>
-            <form action="/login" method="POST">
-                <label for="username">Id corporativo</label>
-                <input type="username" id="username" placeholder="Introduce tu id corporativo" required>
-                
+            <form id="login-form" action="/login" method="POST">
+                <label for="Id">Id corporativo</label>
+                <input type="text" name="Id" id="Id" placeholder="Introduce tu id corporativo" required>
                 <button type="submit">Iniciar Sesión</button>
             </form>
         </div>
-    <script src="JavaScrip/scripts.js"></script>
+    </div>
+
 </body>
 </html>

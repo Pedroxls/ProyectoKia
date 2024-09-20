@@ -6,19 +6,19 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Configuración de la base de datos
+// Configuración de la base de datos para SQL Server
 const dbConfig = {
     user: 'administrador',
     password: 'Kia_79123',
-    server: 'servidorsql-kia.database.windows.net', // O la IP de tu servidor
-    database: 'KiaData',
+    server: 'servidorsql-kia.database.windows.net',
+    database: 'DataKia',
     options: {
-        encrypt: true, // Usar SSL
+        encrypt: true, // Esto es necesario para Azure SQL
         enableArithAbort: true
     }
 };
 
-// Conexión a la base de datos
+// Conexión a la base de datos SQL Server
 sql.connect(dbConfig, (err) => {
     if (err) {
         console.log('Error conectando a la base de datos:', err);
@@ -29,26 +29,23 @@ sql.connect(dbConfig, (err) => {
 
 // Ruta de inicio de sesión
 app.post('/login', (req, res) => {
-    // Extraer el Id del cuerpo de la solicitud (proveniente del formulario)
     const { Id } = req.body;
+    console.log('Valor recibido del formulario:', Id);
 
-    // Consulta SQL para verificar si el Id existe en la tabla 'Usuario'
-    const query = `SELECT * FROM Usuario WHERE id = @Id`;
+    // Consulta para verificar el ID del empleado
+    const query = 'SELECT * FROM Usuario WHERE Id = @Id';
 
-    // Crear una nueva solicitud de SQL
-    new sql.Request()
-        .input('Id', sql.VarChar, Id)  // Pasar el Id como parámetro a la consulta
+    const request = new sql.Request();
+    request.input('Id', sql.Int, parseInt(Id)) // Asegúrate de que sea un número si el campo es INT
         .query(query, (err, result) => {
             if (err) {
-                // Si hay un error en la consulta
                 console.log('Error en la consulta:', err);
                 res.status(500).send('Error en el servidor');
             } else {
-                // Si la consulta tiene resultados
                 if (result.recordset.length > 0) {
-                    res.status(200).send('Login exitoso');  // El Id existe
+                    res.status(200).send('Login exitoso');
                 } else {
-                    res.status(401).send('Usuario no encontrado');  // El Id no existe
+                    res.status(401).send('Usuario no encontrado');
                 }
             }
         });
