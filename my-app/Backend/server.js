@@ -11,7 +11,7 @@ const dbConfig = {
     user: 'administrador',
     password: 'Kia_79123',
     server: 'servidorsql-kia.database.windows.net',
-    database: 'DataKia',
+    database: 'KiaData',
     options: {
         encrypt: true, // Esto es necesario para Azure SQL
         enableArithAbort: true
