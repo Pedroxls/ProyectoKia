@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const sql = require('mssql');
 const bodyParser = require('body-parser');
 
@@ -19,7 +20,7 @@ const dbConfig = {
 };
 
 // Servir archivos estáticos (como CSS, JS, imágenes)
-app.use(express.static('public')); // Servir la carpeta public
+app.use(express.static(path.join(__dirname, 'public'))); // Sirve la carpeta public
 
 // Ruta de inicio de sesión
 app.post('/login', async (req, res) => {
@@ -50,7 +51,7 @@ app.post('/login', async (req, res) => {
 
 // Ruta que sirve la página principal después del login
 app.get('/pagina', (req, res) => {
-    res.sendFile('C:/Users/Nukat/CONSTRUCCIÓN/ProyectoKia/my-app/public/Página.html');
+    res.sendFile(path.join(__dirname, 'public', 'Página.html')); // Usar path.join para evitar problemas con rutas
 });
 
 // Iniciar el servidor
