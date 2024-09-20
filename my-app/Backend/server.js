@@ -49,9 +49,28 @@ app.post('/login', async (req, res) => {
     }
 });
 
-// Ruta que sirve la página principal después del login
 app.get('/pagina', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public', 'Página.html', 'inicio.hmtl', 'Videojuego.html', 'compensaciones.html', 'calendario.html', 'contacto.html')); // Usar path.join para evitar problemas con rutas
+    res.sendFile(path.join(__dirname, 'public', 'Página.html'));
+});
+
+app.get('/inicio', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'inicio.html'));
+});
+
+app.get('/videojuego', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'Videojuego.html'));
+});
+
+app.get('/compensaciones', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'compensaciones.html'));
+});
+
+app.get('/calendario', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'calendario.html'));
+});
+
+app.get('/contacto', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'contacto.html'));
 });
 
 // Iniciar el servidor
