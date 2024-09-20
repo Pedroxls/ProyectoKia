@@ -20,7 +20,7 @@ const dbConfig = {
 };
 
 // Servir archivos estáticos (como CSS, JS, imágenes)
-app.use(express.static(path.join(__dirname, 'public'))); // Sirve la carpeta public
+app.use(express.static(path.join(__dirname, '..', 'public'))); // Sirve la carpeta public
 
 // Ruta de inicio de sesión
 app.post('/login', async (req, res) => {
@@ -51,27 +51,27 @@ app.post('/login', async (req, res) => {
 
 // Rutas para las diferentes páginas HTML
 app.get('/pagina', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'Página.html'));
+    res.sendFile(path.join(__dirname, '..', 'public', 'Página.html'));
 });
 
 app.get('/inicio', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'inicio.html'));
+    res.sendFile(path.join(__dirname, '..', 'public', 'inicio.html'));
 });
 
 app.get('/videojuego', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'Videojuego.html'));
+    res.sendFile(path.join(__dirname, '..', 'public', 'Videojuego.html'));
 });
 
 app.get('/compensaciones', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'compensaciones.html'));
+    res.sendFile(path.join(__dirname, '..', 'public', 'compensaciones.html'));
 });
 
 app.get('/calendario', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'calendario.html'));
+    res.sendFile(path.join(__dirname, '..', 'public', 'calendario.html'));
 });
 
 app.get('/contacto', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'contacto.html'));
+    res.sendFile(path.join(__dirname, '..', 'public', 'contacto.html'));
 });
 
 // Iniciar el servidor
