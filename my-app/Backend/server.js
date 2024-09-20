@@ -51,7 +51,7 @@ app.post('/login', async (req, res) => {
 
 // Ruta que sirve la página principal después del login
 app.get('/pagina', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public', 'Página.html')); // Usar path.join para evitar problemas con rutas
+    res.sendFile(path.join(__dirname, '..', 'public', 'Página.html', 'inicio.hmtl', 'Videojuego.html', 'compensaciones.html', 'calendario.html', 'contacto.html')); // Usar path.join para evitar problemas con rutas
 });
 
 // Iniciar el servidor
