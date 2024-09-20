@@ -46,7 +46,7 @@ app.post('/login', async (req, res) => {
 });
 
 app.get('/pagina', (req, res) => {
-    res.sendFile(__dirname + '/public/Página.html');
+    res.sendFile('C:/Users/Nukat/CONSTRUCCIÓN/ProyectoKia/my-app/public/Página.html');
 });
 
 // Iniciar el servidor
