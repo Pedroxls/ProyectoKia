@@ -35,6 +35,10 @@ app.post('/login', async (req, res) => {
         const result = await request.input('Id', sql.VarChar, Id).query(query);
 
         if (result.recordset.length > 0) {
+            const insertQuery = 'INSERT INTO Login (Id, FechaInicio) VALUES (@Id, @Fecha)';
+            const now = new Date();
+            await request.input('Fecha', sql.DateTime, now).input('Id', sql.Int, Id).query(insertQuery);
+            
             // Si el usuario existe, redirigir a la página deseada
             res.redirect('/pagina'); // Cambia esto por la URL a la que deseas redirigir
         } else {
