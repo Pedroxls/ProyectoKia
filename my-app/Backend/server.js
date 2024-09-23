@@ -1,8 +1,7 @@
 const express = require('express');
 const path = require('path');
-const bodyParser = require('body-parser');
 const sql = require('mssql');
-const contactoRoutes = require('./contacto');  // Asegúrate de que esto apunte al archivo correcto
+const bodyParser = require('body-parser');
 
 const app = express();
 app.use(bodyParser.json());
@@ -23,8 +22,6 @@ const dbConfig = {
 // Servir archivos estáticos (como CSS, JS, imágenes)
 app.use(express.static(path.join(__dirname, '..', 'public'))); // Sirve la carpeta public
 
-app.use('/', contactoRoutes);
-
 // Ruta de inicio de sesión
 app.post('/login', async (req, res) => {
     const { Id } = req.body;
@@ -34,15 +31,17 @@ app.post('/login', async (req, res) => {
         let pool = await sql.connect(dbConfig); // Conectar a la base de datos
         const request = new sql.Request(pool);  // Crear la solicitud
 
+        // Verificar si el usuario existe en la tabla Usuario
         const query = 'SELECT * FROM Usuario WHERE Id = @Id';
-        const result = await request.input('Id', sql.VarChar, Id).query(query);
+        const result = await request.input('Id', sql.Int, Id).query(query);
 
         if (result.recordset.length > 0) {
-            const insertQuery = 'INSERT INTO Login (IdLogin, FechaInicio) VALUES (@IdLogin, @Fecha)';
+            // Si el usuario existe, registrar la fecha y hora del login en la tabla Login
+            const insertQuery = 'INSERT INTO Login (Id, FechaInicio) VALUES (@Id, @Fecha)';
             const now = new Date();
-            await request.input('Fecha', sql.DateTime, now).input('IdLogin', sql.Int, Id).query(insertQuery);
+            await request.input('Fecha', sql.DateTime, now).input('Id', sql.Int, Id).query(insertQuery);
 
-            // Si el usuario existe, redirigir a la página deseada
+            // Redirigir a la página deseada
             res.redirect('/pagina'); // Cambia esto por la URL a la que deseas redirigir
         } else {
             // Si el usuario no existe
