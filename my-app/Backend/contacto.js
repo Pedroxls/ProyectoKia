@@ -1,9 +1,14 @@
 const express = require('express');
 const sql = require('mssql');
+const bodyParser = require('body-parser');
 
-const router = express.Router();
+const app = express();
 
-// Configuración de la base de datos (puedes compartirla desde otro archivo si es necesario)
+// Middleware para analizar los datos del formulario
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Configuración de la base de datos
 const dbConfig = {
     user: 'administrador',
     password: 'Kia_79123',
@@ -16,14 +21,15 @@ const dbConfig = {
 };
 
 // Ruta para manejar el formulario de contacto
-router.post('/contacto', async (req, res) => {
+app.post('/contacto', async (req, res) => {
     const { name, id, area, message, correo } = req.body;
 
     try {
-        let pool = await sql.connect(dbConfig); // Conectar a la base de datos
+        // Conectar a la base de datos
+        let pool = await sql.connect(dbConfig);
         const request = new sql.Request(pool);
 
-        // Insertar los datos en la tabla Contacto
+        // Consulta para insertar los datos en la tabla Contacto
         const insertQuery = `
             INSERT INTO Contacto (nombreEmisor, Id, AreaTrabajo, Mensaje, CorreoEmisor) 
             VALUES (@nombreEmisor, @Id, @AreaTrabajo, @Mensaje, @CorreoEmisor)
@@ -36,7 +42,7 @@ router.post('/contacto', async (req, res) => {
             .input('CorreoEmisor', sql.VarChar, correo)
             .query(insertQuery);
 
-        // Enviar respuesta de éxito
+        // Responder al cliente
         res.status(200).send('Mensaje enviado exitosamente');
     } catch (err) {
         console.error('Error al guardar en la base de datos:', err);
@@ -46,4 +52,7 @@ router.post('/contacto', async (req, res) => {
     }
 });
 
-module.exports = router;
+// Iniciar el servidor
+app.listen(3000, () => {
+    console.log('Servidor escuchando en el puerto 3000');
+});
