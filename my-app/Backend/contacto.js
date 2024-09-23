@@ -1,12 +1,6 @@
 const express = require('express');
 const sql = require('mssql');
-const bodyParser = require('body-parser');
-
-const app = express();
-
-// Middleware para analizar los datos del formulario
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+const router = express.Router();  // Crear el router en lugar de app
 
 // Configuración de la base de datos
 const dbConfig = {
@@ -21,7 +15,7 @@ const dbConfig = {
 };
 
 // Ruta para manejar el formulario de contacto
-app.post('/contacto', async (req, res) => {
+router.post('/contacto', async (req, res) => {
     const { name, id, area, message, correo } = req.body;
 
     try {
@@ -52,7 +46,4 @@ app.post('/contacto', async (req, res) => {
     }
 });
 
-// Iniciar el servidor
-app.listen(3000, () => {
-    console.log('Servidor escuchando en el puerto 3000');
-});
+module.exports = router;  // Exporta el router, no app
