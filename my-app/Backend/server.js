@@ -36,12 +36,11 @@ app.post('/login', async (req, res) => {
         const result = await request.input('Id', sql.Int, Id).query(query);
 
         if (result.recordset.length > 0) {
-            // Si el usuario existe, registrar la fecha y hora del login en la tabla Login
             const insertQuery = 'INSERT INTO Login (IdLogin, FechaInicio) VALUES (@IdLogin, @Fecha)';
             const now = new Date();
             await request.input('Fecha', sql.DateTime, now).input('IdLogin', sql.Int, Id).query(insertQuery);
 
-            // Redirigir a la página deseada
+            // Si el usuario existe, redirigir a la página deseada
             res.redirect('/pagina'); // Cambia esto por la URL a la que deseas redirigir
         } else {
             // Si el usuario no existe
