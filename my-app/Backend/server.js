@@ -3,6 +3,8 @@ const path = require('path');
 const sql = require('mssql');
 const bodyParser = require('body-parser');
 
+const contactoRoutes = require('./contacto');
+
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -21,6 +23,8 @@ const dbConfig = {
 
 // Servir archivos estáticos (como CSS, JS, imágenes)
 app.use(express.static(path.join(__dirname, '..', 'public'))); // Sirve la carpeta public
+
+app.use(contactoRoutes);
 
 // Ruta de inicio de sesión
 app.post('/login', async (req, res) => {
