@@ -16,7 +16,7 @@ const dbConfig = {
 
 // Ruta para manejar el formulario de contacto
 router.post('/contacto', async (req, res) => {
-    const { name, id, area, message, correo } = req.body;
+    const { name, IdContacto, area, message, correo } = req.body;
 
     try {
         // Conectar a la base de datos
@@ -25,12 +25,12 @@ router.post('/contacto', async (req, res) => {
 
         // Consulta para insertar los datos en la tabla Contacto
         const insertQuery = `
-            INSERT INTO Contacto (nombreEmisor, Id, AreaTrabajo, Mensaje, CorreoEmisor) 
-            VALUES (@nombreEmisor, @Id, @AreaTrabajo, @Mensaje, @CorreoEmisor)
+            INSERT INTO Contacto (nombreEmisor, IdContacto, AreaTrabajo, Mensaje, CorreoEmisor) 
+            VALUES (@nombreEmisor, @IdContacto, @AreaTrabajo, @Mensaje, @CorreoEmisor)
         `;
         await request
             .input('nombreEmisor', sql.VarChar, name)
-            .input('Id', sql.Int, id)
+            .input('Id', sql.Int, IdContacto)
             .input('AreaTrabajo', sql.VarChar, area)
             .input('Mensaje', sql.VarChar, message)
             .input('CorreoEmisor', sql.VarChar, correo)
