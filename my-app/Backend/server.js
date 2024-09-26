@@ -59,6 +59,7 @@ app.get('/pagina', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'Página.html'));
 });
 
+
 app.get('/inicio', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'inicio.html'));
 });
