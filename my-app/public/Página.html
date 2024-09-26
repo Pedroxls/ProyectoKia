@@ -26,10 +26,41 @@
             <div class="top-right-links">
                 <a href="index.html" id="cerrarSesionBtn">Cerrar Sesión</a>
             </div>
+        <script>  
+            document.getElementById('cerrarSesionBtn').addEventListener('click', async () => {
+            // Definir los datos que se enviarán al servidor
+            const FechaDeSalida = new Date().toISOString(); // Fecha actual en formato ISO
+            const IdSalida = document.getElementById('userId').value; // Obtener el ID del usuario desde el DOM (asegúrate de tener un campo oculto o similar)
+
+            try {
+                const response = await fetch('/CerrarSesion', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ FechaDeSalida, IdSalida }),
+                });
+
+                const resultado = document.getElementById('resultado');
+                if (response.ok) {
+                    resultado.textContent = 'Sesión cerrada correctamente';
+                    // Redireccionar a la página de inicio u otra página
+                    setTimeout(() => {
+                        window.location.href = '/inicio'; // Cambia esto a la URL deseada
+                    }, 2000); // Redireccionar después de 2 segundos
+                } else {
+                    const errorText = await response.text();
+                    resultado.textContent = `Error: ${errorText}`;
+                }
+            } catch (error) {
+                console.error('Error en la solicitud:', error);
+                document.getElementById('resultado').textContent = 'Error al cerrar sesión. Por favor, inténtalo de nuevo.';
+            }
+        }); 
+        </script>  
+        
         </nav>
     </header>
-
-
     <main>
         <section class="slogan">
             <h1>¡Bienvenido al apartado de compensaciones de KIA Motors!</h1>
@@ -61,7 +92,6 @@
         <p>Este sitio utiliza cookies para mejorar tu experiencia de usuario. Para más información consulta nuestra <a href="#">Política de Cookies</a>.</p>
     </footer>
    
-    <script src="Backend/cerrarSesion.js"></script>
 
 </body>
 </html>

@@ -54,6 +54,29 @@ app.post('/login', async (req, res) => {
     }
 });
 
+app.post('/CerrarSesion', async (req, res) => {
+    const { FechaDeSalida, IdSalida } = req.body; // Obtener los datos del cuerpo de la solicitud
+    console.log('Valor recibido del formulario de cierre de sesión:', FechaDeSalida, IdSalida);
+
+    try {
+        let pool = await sql.connect(dbConfig); // Conectar a la base de datos
+        const request = new sql.Request(pool);  // Crear la solicitud
+
+        // Insertar en la tabla de sesiones cerradas o similar
+        const insertQuery = 'INSERT INTO Login (FechaSalida, IdLogin) VALUES (@Fecha, @IdLogin)';
+        await request.input('Fecha', sql.DateTime, FechaDeSalida).input('IdLogin', sql.VarChar, IdSalida).query(insertQuery);
+
+        // Si se guarda correctamente
+        res.sendStatus(401);
+    } catch (err) {
+        console.error('Error en la consulta:', err);
+        res.status(500).send('Error en el servidor');
+    } finally {
+        sql.close(); // Cerrar la conexión
+    }
+});
+
+
 // Rutas para las diferentes páginas HTML
 app.get('/pagina', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'Página.html'));

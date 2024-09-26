@@ -5,3 +5,5 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = 'Página.html'; // Redirige a la página de inicio de sesión si no está autenticado
     }
 });
+
+
