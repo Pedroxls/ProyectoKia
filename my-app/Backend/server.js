@@ -22,6 +22,9 @@ const dbConfig = {
 // Servir archivos estáticos (como CSS, JS, imágenes)
 app.use(express.static(path.join(__dirname, '..', 'public'))); // Sirve la carpeta public
 
+// Crear una tabla hash (en este caso, un Map) para almacenar los logins activos
+const loginHashTable = new Map();
+
 // Ruta de inicio de sesión
 app.post('/login', async (req, res) => {
     const { Id } = req.body;
@@ -40,6 +43,9 @@ app.post('/login', async (req, res) => {
             const now = new Date();
             await request.input('Fecha', sql.DateTime, now).input('IdLogin', sql.Int, Id).query(insertQuery);
 
+            // Guardar el IdLogin en el Map
+            loginHashTable.set(Id, { fechaInicio: now });
+
             // Si el usuario existe, redirigir a la página deseada
             res.redirect('/pagina'); // Cambia esto por la URL a la que deseas redirigir
         } else {
@@ -54,25 +60,36 @@ app.post('/login', async (req, res) => {
     }
 });
 
+// Ruta para cerrar sesión
 app.post('/CerrarSesion', async (req, res) => {
-    const { FechaDeSalida, IdSalida } = req.body; // Obtener los datos del cuerpo de la solicitud
-    console.log('Valor recibido del formulario de cierre de sesión:', FechaDeSalida, IdSalida);
+    const { IdSalida } = req.body; // Obtener el Id del usuario que va a cerrar sesión
+    const now = new Date();
 
-    try {
-        let pool = await sql.connect(dbConfig); // Conectar a la base de datos
-        const request = new sql.Request(pool);  // Crear la solicitud
+    console.log('Cierre de sesión para:', IdSalida);
 
-        // Insertar en la tabla de sesiones cerradas o similar
-        const insertQuery = 'INSERT INTO Login (FechaSalida, IdLogin) VALUES (@Fecha, @IdLogin)';
-        await request.input('Fecha', sql.DateTime, FechaDeSalida).input('IdLogin', sql.VarChar, IdSalida).query(insertQuery);
+    if (loginHashTable.has(IdSalida)) {
+        try {
+            let pool = await sql.connect(dbConfig); // Conectar a la base de datos
+            const request = new sql.Request(pool);  // Crear la solicitud
 
-        // Si se guarda correctamente
-        res.sendStatus(401);
-    } catch (err) {
-        console.error('Error en la consulta:', err);
-        res.status(500).send('Error en el servidor');
-    } finally {
-        sql.close(); // Cerrar la conexión
+            // Insertar la fecha de salida en la tabla Login
+            const insertQuery = 'UPDATE Login SET FechaSalida = @Fecha WHERE IdLogin = @IdLogin';
+            await request.input('Fecha', sql.DateTime, now).input('IdLogin', sql.Int, IdSalida).query(insertQuery);
+
+            // Eliminar el IdLogin del Map, ya que se ha cerrado la sesión
+            loginHashTable.delete(IdSalida);
+
+            // Redirigir o enviar respuesta indicando éxito en el cierre de sesión
+            res.send('Sesión cerrada exitosamente.');
+        } catch (err) {
+            console.error('Error en la consulta:', err);
+            res.status(500).send('Error al cerrar la sesión');
+        } finally {
+            sql.close(); // Cerrar la conexión
+        }
+    } else {
+        // Si el Id no está en el Map, significa que no estaba logueado
+        res.status(401).send('El usuario no está logueado o ya cerró sesión');
     }
 });
 
