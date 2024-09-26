@@ -22,7 +22,6 @@ header {
     align-items: center;
 }
 
-
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -68,6 +67,12 @@ header {
 
 .contact {
     padding: 50px 20px;
+    background-color: #ecf0f1;
+    text-align: center;
+}
+
+.contact2 {
+    padding: 200px 20px;
     background-color: #ecf0f1;
     text-align: center;
 }
