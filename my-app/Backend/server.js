@@ -80,6 +80,45 @@ app.get('/contacto', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'contacto.html'));
 });
 
+app.post('/contacto', async (req, res) => {
+    const { nombre, idcontacto, areatrabajo, mensaje } = req.body;
+
+    try {
+        let pool = await sql.connect(dbConfig); // Conectar a la base de datos
+        const request = new sql.Request(pool);  // Crear la solicitud
+
+        // Consulta de inserción para guardar los datos del formulario
+        const insertQuery = `
+            INSERT INTO Contacto (nombreEmisor, IdContacto, AreaTrabajo, Mensaje, FechaContacto)
+            VALUES (@nombreEmisor, @IdContacto, @AreaTrabajo, @Mensaje, @FechaContacto)
+        `;
+
+        const now = new Date();
+
+        // Ejecutar la consulta de inserción
+        await request
+            .input('nombreEmisor', sql.VarChar, nombre)           // Nombre completo del empleado
+            .input('IdContacto', sql.Int, idcontacto)             // Número de empleado
+            .input('AreaTrabajo', sql.VarChar, areatrabajo)      // Área de trabajo actual
+            .input('Mensaje', sql.VarChar, mensaje)       // Mensaje
+            .input('FechaContacto', sql.DateTime, now)            // Fecha del mensaje
+            .query(insertQuery);
+
+        // Redirigir a una página de éxito o agradecer el envío
+        res.redirect('/contacto-exitoso'); // Cambia esto a donde quieras redirigir después de enviar
+    } catch (err) {
+        console.error('Error al insertar los datos del formulario:', err);
+        res.status(500).send('Error al enviar el formulario');
+    } finally {
+        sql.close(); // Cerrar la conexión
+    }
+});
+
+// Ruta para la página de éxito
+app.get('/contacto-exitoso', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'public', 'contacto-exitoso.html'));
+});
+
 // Iniciar el servidor
 app.listen(3000, () => {
     console.log('Servidor escuchando en el puerto 3000');
