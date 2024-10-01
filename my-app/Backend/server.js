@@ -27,18 +27,22 @@ const loginHashTable = new Map();
 
 // Ruta de inicio de sesión
 app.post('/login', async (req, res) => {
-    const { Id } = req.body;
-    console.log('Valor recibido del formulario:', Id);
+    const { Id, password } = req.body; // Recibimos tanto el Id como la fecha de nacimiento (contraseña)
+    console.log('Valores recibidos del formulario:', Id, password);
 
     try {
         let pool = await sql.connect(dbConfig); // Conectar a la base de datos
         const request = new sql.Request(pool);  // Crear la solicitud
 
-        // Verificar si el usuario existe en la tabla Usuario
-        const query = 'SELECT * FROM Usuario WHERE Id = @Id';
-        const result = await request.input('Id', sql.Int, Id).query(query);
+        // Verificar si el usuario existe en la tabla Usuario y comparar el Id y la fecha de nacimiento (Birth_date)
+        const query = 'SELECT * FROM Usuario WHERE Id = @Id AND Birth_date = @Birth_date';
+        const result = await request
+            .input('Id', sql.Int, Id)
+            .input('Birth_date', sql.Date, password) // Asegúrate de que el formato de fecha sea YYYY-MM-DD
+            .query(query);
 
         if (result.recordset.length > 0) {
+            // El usuario fue encontrado y la fecha de nacimiento coincide
             const insertQuery = 'INSERT INTO Login (IdLogin, FechaInicio) VALUES (@IdLogin, @Fecha)';
             const now = new Date();
             await request.input('Fecha', sql.DateTime, now).input('IdLogin', sql.Int, Id).query(insertQuery);
@@ -49,8 +53,8 @@ app.post('/login', async (req, res) => {
             // Si el usuario existe, redirigir a la página deseada
             res.redirect('/pagina'); // Cambia esto por la URL a la que deseas redirigir
         } else {
-            // Si el usuario no existe
-            res.status(401).send('Usuario no encontrado o ID incorrecto');
+            // Si el usuario no existe o la contraseña (fecha de nacimiento) es incorrecta
+            res.status(401).send('ID o contraseña incorrecta');
         }
     } catch (err) {
         console.error('Error en la consulta:', err);
@@ -59,6 +63,7 @@ app.post('/login', async (req, res) => {
         sql.close(); // Cerrar la conexión
     }
 });
+
 
 // Ruta para cerrar sesión
 app.post('/CerrarSesion', async (req, res) => {

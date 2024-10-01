@@ -28,13 +28,33 @@
         <!-- Pantalla de inicio de sesión -->
         <div id="login-container" class="form-container active">
             <h1>Iniciar Sesión</h1>
-            <form id="login-form" action="/login" method="POST">
+            <form id="login-form" action="/login" method="POST" onsubmit="return validateDate()">
                 <label for="Id">Id corporativo</label>
                 <input type="text" name="Id" id="Id" placeholder="Introduce tu id corporativo" required>
+            
+                <!-- Campo de texto para la fecha de nacimiento (contraseña) -->
+                <label for="password">Fecha de nacimiento (YYYY-MM-DD)</label>
+                <input type="text" name="password" id="password" required placeholder="YYYY-MM-DD" pattern="\d{4}-\d{2}-\d{2}">
+            
                 <button type="submit">Iniciar Sesión</button>
             </form>
         </div>
     </div>
+
+    <!-- Validación de fecha en formato YYYY-MM-DD -->
+    <script>
+        function validateDate() {
+            const dateInput = document.getElementById('password').value;
+            const regex = /^\d{4}-\d{2}-\d{2}$/;
+
+            if (!regex.test(dateInput)) {
+                alert('Por favor, introduce la fecha en el formato YYYY-MM-DD');
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 
 </body>
 </html>
