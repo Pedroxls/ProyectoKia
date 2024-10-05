@@ -25,43 +25,48 @@ app.use(express.static(path.join(__dirname, '..', 'public'))); // Sirve la carpe
 // Crear una tabla hash (en este caso, un Map) para almacenar los logins activos
 const loginHashTable = new Map();
 
-// Ruta de inicio de sesión
-app.post('/login', async (req, res) => {
-    const { Id, password } = req.body; // Recibimos tanto el Id como la fecha de nacimiento (contraseña)
-    console.log('Valores recibidos del formulario:', Id, password);
+// Ruta para verificar el usuario y crear una contraseña
+app.post('/crear-cuenta', async (req, res) => {
+    const { Id, birth_date, new_password } = req.body;
 
     try {
         let pool = await sql.connect(dbConfig); // Conectar a la base de datos
         const request = new sql.Request(pool);  // Crear la solicitud
 
-        // Verificar si el usuario existe en la tabla Usuario y comparar el Id y la fecha de nacimiento (Birth_date)
+        // Verificar si el usuario existe en la tabla Usuario y comparar el Id y la fecha de nacimiento
         const query = 'SELECT * FROM Usuario WHERE Id = @Id AND Birth_date = @Birth_date';
         const result = await request
             .input('Id', sql.Int, Id)
-            .input('Birth_date', sql.Date, password) // Asegúrate de que el formato de fecha sea YYYY-MM-DD
+            .input('Birth_date', sql.Date, birth_date)
             .query(query);
 
         if (result.recordset.length > 0) {
             // El usuario fue encontrado y la fecha de nacimiento coincide
-            const insertQuery = 'INSERT INTO Login (IdLogin, FechaInicio) VALUES (@IdLogin, @Fecha)';
-            const now = new Date();
-            await request.input('Fecha', sql.DateTime, now).input('IdLogin', sql.Int, Id).query(insertQuery);
+            // Insertar la nueva contraseña en la tabla ContraseñaUsuario
+            const insertQuery = 'INSERT INTO ContraseñaUsuario (Id, Birth_date, Contraseña_Usuario) VALUES (@Id, @Birth_date, @Contraseña_Usuario)';
+            await request
+                .input('Id', sql.Int, Id)
+                .input('Birth_date', sql.Date, birth_date)
+                .input('Contraseña_Usuario', sql.VarChar(100), new_password)
+                .query(insertQuery);
 
-            // Guardar el IdLogin en el Map
-            loginHashTable.set(Id, { fechaInicio: now });
-
-            // Si el usuario existe, redirigir a la página deseada
-            res.redirect('/pagina'); // Cambia esto por la URL a la que deseas redirigir
+            // Redirigir a la página de éxito
+            res.redirect('/crear-cuenta-exitoso');
         } else {
-            // Si el usuario no existe o la contraseña (fecha de nacimiento) es incorrecta
-            res.status(401).send('ID o contraseña incorrecta');
+            // Si el usuario no existe o la fecha de nacimiento es incorrecta
+            res.status(401).send('ID o fecha de nacimiento incorrectos');
         }
     } catch (err) {
         console.error('Error en la consulta:', err);
-        res.status(500).send('Error en el servidor');
+        res.status(500).send('Error en el servidor al crear la cuenta');
     } finally {
         sql.close(); // Cerrar la conexión
     }
+});
+
+// Ruta para la página de éxito
+app.get('/crear-cuenta-exitoso', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'public', 'crear-cuenta-exitoso.html'));
 });
 
 

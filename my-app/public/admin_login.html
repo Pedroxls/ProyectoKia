@@ -5,14 +5,14 @@
     <link rel="icon" href="kiablanco.ico" />
     <script src="JavaScrip/login.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página de Autenticación</title>
+    <title>Iniciar como Administrador</title>
     <link rel="stylesheet" href="Css/style_login.css">
 </head>
 <body>
     
     <!-- Video de fondo -->
     <video autoplay muted loop id="background-video">
-        <source src="1/kiavideo.mp4" type="video/mp4">
+        <source src="1/7.mp4" type="video/mp4">
         Tu navegador no soporta el elemento de video.
     </video>
 
@@ -25,34 +25,32 @@
 
     <!-- Contenedor de las vistas (login, recuperar cuenta, crear cuenta, iniciar como administrador) -->
     <div class="auth-container">
-        <!-- Pantalla de inicio de sesión -->
-        <div id="login-container" class="form-container active">
-            <h1>Iniciar Sesión</h1>
-            <form id="login-form" action="/login" method="POST" onsubmit="return validatePassword()">
-                <label for="Id">Id corporativo</label>
-                <input type="text" name="Id" id="Id" placeholder="Introduce tu id corporativo" required>
+        <!-- Pantalla de inicio de sesión como administrador -->
+        <div id="admin-login-container" class="form-container active">
+            <h1>Iniciar como Administrador</h1>
+            <form id="admin-login-form" action="/admin_login" method="POST" onsubmit="return validateAdminPassword()">
+                <label for="adminId">ID de Administrador</label>
+                <input type="text" name="adminId" id="adminId" placeholder="Introduce tu ID de administrador" required>
             
                 <!-- Campo de texto para la contraseña -->
-                <label for="password">Contraseña</label>
-                <input type="password" name="password" id="password" required placeholder="Introduce tu contraseña">
+                <label for="adminPassword">Contraseña</label>
+                <input type="password" name="adminPassword" id="adminPassword" required placeholder="Introduce tu contraseña">
             
                 <button type="submit">Iniciar Sesión</button>
             </form>
 
             <!-- Botones adicionales -->
             <div class="links">
-                <a href="CrearCuenta.html">Crear Cuenta</a>
-                <a href="RecuperarContraseña.html">Olvidar Contraseña</a>
-                <a href="admin_login.html">Iniciar como Administrador</a>
+                <a href="index.html">Volver al Inicio de Sesión</a>
             </div>
         </div>
     </div>
 
-    <!-- Validación de contraseña -->
+    <!-- Validación de contraseña para administrador -->
     <script>
-        function validatePassword() {
-            const passwordInput = document.getElementById('password').value;
-            if (passwordInput.trim() === '') {
+        function validateAdminPassword() {
+            const adminPasswordInput = document.getElementById('adminPassword').value;
+            if (adminPasswordInput.trim() === '') {
                 alert('Por favor, introduce una contraseña válida');
                 return false;
             }

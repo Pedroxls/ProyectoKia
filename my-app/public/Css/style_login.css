@@ -1,4 +1,4 @@
-* {
+* { 
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -68,6 +68,12 @@ h1 {
     color: #333;
 }
 
+.error-message {
+    color: red;
+    margin-top: 10px;
+    font-size: 16px;
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -127,6 +133,23 @@ a {
 
 a:hover {
     color: #0056b3;
+}
+
+/* Estilo para los botones adicionales */
+.links a {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 5px;
+    background-color: #0056b3; /* Color de fondo del botón */
+    color: white; /* Color del texto */
+    text-decoration: none; /* Quitar subrayado */
+    font-size: 16px; /* Tamaño de fuente */
+    border-radius: 5px; /* Bordes redondeados */
+    transition: background-color 0.3s ease; /* Efecto de transición al pasar el cursor */
+}
+
+.links a:hover {
+    background-color: #0dc320; /* Color de fondo al hacer hover */
 }
 
 .links {
