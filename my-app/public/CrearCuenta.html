@@ -40,56 +40,101 @@
             </form>
             
             <!-- Paso 2: Creación de contraseña (oculto inicialmente) -->
-            <form id="step-2-form" style="display: none;" onsubmit="return validatePassword()">
+            <form id="step-2-form" style="display: none;" onsubmit="return createPassword()">
+                <label for="Id_2">Id corporativo</label>
+                <input type="text" name="Id" id="Id_2" placeholder="Introduce tu id corporativo" required>
+
                 <label for="password">Contraseña</label>
                 <input type="password" name="password" id="password" required placeholder="Ingresa tu contraseña">
                 
                 <label for="confirm-password">Confirmar Contraseña</label>
                 <input type="password" name="confirm-password" id="confirm-password" required placeholder="Confirma tu contraseña">
                 
-                <button type="submit">Crear Cuenta</button>
+                <button type="submit">Listo</button>
             </form>
-
+            
             <!-- Botones adicionales -->
             <div class="links">
-                <a href="RecuperarContraseña.html">Iniciar Sesión</a>
-                <a href="olvidar_contraseña.html">Olvidar Contraseña</a>
+                <a href="Index.html">Iniciar Sesión</a>
             </div>
         </div>
     </div>
 
     <!-- Validación y manejo del flujo de creación de cuenta -->
     <script>
-        // Función para validar el primer paso (ID y fecha)
         function confirmIdAndDate() {
             const id = document.getElementById('Id').value;
-            const dateInput = document.getElementById('fecha-nacimiento').value;
+            const birthDate = document.getElementById('fecha-nacimiento').value;
+
+            // Validar que la fecha tenga el formato correcto
             const regex = /^\d{4}-\d{2}-\d{2}$/;
-            
-            if (!regex.test(dateInput)) {
+            if (!regex.test(birthDate)) {
                 alert('Por favor, introduce la fecha en el formato YYYY-MM-DD');
                 return false;
             }
 
-            if (id && dateInput) {
-                // Ocultar el primer formulario y mostrar el segundo
-                document.getElementById('step-1-form').style.display = 'none';
-                document.getElementById('step-2-form').style.display = 'block';
-                return false; // Evitar que se recargue la página
-            }
+            // Realizar la solicitud al servidor para verificar el Id y la fecha de nacimiento
+            fetch('/crear-cuenta', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ Id: id, birth_date: birthDate }),
+            })
+            .then(response => response.json())  // Parsear la respuesta JSON del servidor
+            .then(data => {
+                if (data.success) {
+                    // Si la verificación es exitosa, mostrar el formulario de creación de contraseña
+                    document.getElementById('step-1-form').style.display = 'none';
+                    document.getElementById('step-2-form').style.display = 'block';
+                } else {
+                    // Mostrar el mensaje de error si la verificación falló
+                    alert(data.message);
+                }
+            })
+            .catch(err => {
+                console.error('Error en la confirmación de datos:', err);
+                alert('Hubo un error al verificar los datos.');
+            });
+
+            return false; // Evitar que el formulario se recargue
         }
 
-        // Función para validar las contraseñas
-        function validatePassword() {
-            const password = document.getElementById('password').value;
+        function createPassword() {
+            const Id_Usuario = document.getElementById('Id_2').value; // Cambiado a Id_2
+            const Crear_Contraseña = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirm-password').value;
-            
-            if (password !== confirmPassword) {
-                alert("Las contraseñas no coinciden. Inténtalo de nuevo.");
+
+            // Verificar que la contraseña y la confirmación coincidan
+            if (Crear_Contraseña !== confirmPassword) {
+                alert('Las contraseñas no coinciden. Por favor, intenta de nuevo.');
                 return false;
             }
-            
-            return true; // Si las contraseñas coinciden, el formulario se enviará
+
+            // Realizar la solicitud al servidor para crear la contraseña
+            fetch('/crear-contraseña', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    Id_Usuario: Id_Usuario,  
+                    Crear_Contraseña: Crear_Contraseña 
+                }),
+            })
+            .then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url; // Redirigir a la página de éxito
+                } else {
+                    alert('Error al crear la contraseña. Por favor, intenta de nuevo.');
+                }
+            })
+            .catch(err => {
+                console.error('Error al crear la contraseña:', err);
+                alert('Hubo un error al crear la contraseña.');
+            });
+
+            return false; // Evitar que el formulario se recargue
         }
     </script>
 
