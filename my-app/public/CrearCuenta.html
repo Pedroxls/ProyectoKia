@@ -26,7 +26,7 @@
             <h1>Crear Cuenta</h1>
             
             <!-- Paso 1: Ingreso de ID y fecha de nacimiento -->
-            <form id="step-1-form" onsubmit="return confirmIdAndDate()">
+            <form action="/crear-cuenta" id="step-1-form" onsubmit="return confirmIdAndDate()" method="post">
                 <label for="Id">Id corporativo</label>
                 <input type="text" name="Id" id="Id" placeholder="Introduce tu id corporativo" required>
                 
@@ -37,7 +37,7 @@
             </form>
             
             <!-- Paso 2: Creación de contraseña (oculto inicialmente) -->
-            <form id="step-2-form" style="display: none;" onsubmit="return createPassword()">
+            <form action="/crear-contraseña" id="step-2-form" style="display: none;" onsubmit="return createPassword()" method="post">
                 <label for="Id_2">Id corporativo</label>
                 <input type="text" name="Id" id="Id_2" placeholder="Introduce tu id corporativo" required readonly>
 
