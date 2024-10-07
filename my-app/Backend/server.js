@@ -14,54 +14,52 @@ const dbConfig = {
     server: 'servidorsql-kia.database.windows.net',
     database: 'KiaData',
     options: {
-        encrypt: true, // Esto es necesario para Azure SQL
+        encrypt: true,
         enableArithAbort: true
     }
 };
 
-// Servir archivos estáticos (como CSS, JS, imágenes)
-app.use(express.static(path.join(__dirname, '..', 'public'))); // Sirve la carpeta public
+// Servir archivos estáticos
+app.use(express.static(path.join(__dirname, '..', 'public')));
 
-// Crear una tabla hash (en este caso, un Map) para almacenar los logins activos
+// Crear un Map para almacenar los logins activos
 const loginHashTable = new Map();
+
+// Ruta para el inicio de sesión
 app.post('/login', async (req, res) => {
-    const { Id, password } = req.body; // Recibimos tanto el Id como la fecha de nacimiento (contraseña)
+    const { Id, password } = req.body;
     console.log('Valores recibidos del formulario:', Id, password);
 
     try {
-        let pool = await sql.connect(dbConfig); // Conectar a la base de datos
-        const request = new sql.Request(pool);  // Crear la solicitud
+        let pool = await sql.connect(dbConfig);
+        const request = new sql.Request(pool);
 
-        // Verificar si el usuario existe en la tabla Usuario y comparar el Id y la fecha de nacimiento (Birth_date)
+        // Verificar si el usuario y contraseña existen
         const query = 'SELECT * FROM ContraseñaUsuario WHERE Id_Usuario = @Id_Usuario AND Crear_Contraseña = @Crear_Contraseña';
         const result = await request
             .input('Id_Usuario', sql.Int, Id)
-            .input('Crear_Contraseña', sql.VarChar(100), password) // Asegúrate de que el formato de fecha sea YYYY-MM-DD
+            .input('Crear_Contraseña', sql.VarChar(100), password)
             .query(query);
 
         if (result.recordset.length > 0) {
-            // El usuario fue encontrado y la fecha de nacimiento coincide
-            const insertQuery = 'INSERT INTO Login (IdLogin, FechaInicio) VALUES (@IdLogin, @Fecha)';
             const now = new Date();
+            const insertQuery = 'INSERT INTO Login (IdLogin, FechaInicio) VALUES (@IdLogin, @Fecha)';
             await request.input('Fecha', sql.DateTime, now).input('IdLogin', sql.Int, Id).query(insertQuery);
-
-            // Guardar el IdLogin en el Map
             loginHashTable.set(Id, { fechaInicio: now });
 
-            // Si el usuario existe, redirigir a la página deseada
-            res.redirect('/pagina'); // Cambia esto por la URL a la que deseas redirigir
+            res.redirect('/pagina');
         } else {
-            // Si el usuario no existe o la contraseña (fecha de nacimiento) es incorrecta
             res.status(401).send('ID o contraseña incorrecta');
         }
     } catch (err) {
         console.error('Error en la consulta:', err);
         res.status(500).send('Error en el servidor');
     } finally {
-        sql.close(); // Cerrar la conexión
+        sql.close();
     }
 });
 
+// Ruta para verificar ID y fecha de nacimiento
 app.post('/crear-cuenta', async (req, res) => {
     const { Id, birth_date } = req.body;
 
@@ -69,7 +67,6 @@ app.post('/crear-cuenta', async (req, res) => {
         let pool = await sql.connect(dbConfig);
         const request = new sql.Request(pool);
 
-        // Verificar si el Id y la fecha de nacimiento coinciden en la tabla Usuario
         const query = 'SELECT * FROM Usuario WHERE Id = @Id AND Birth_date = @Birth_date';
         const result = await request
             .input('Id', sql.Int, Id)
@@ -77,151 +74,124 @@ app.post('/crear-cuenta', async (req, res) => {
             .query(query);
 
         if (result.recordset.length > 0) {
-            // Si se encontró el usuario, enviar respuesta exitosa
-            res.status(200).send({ success: true, message: 'Datos verificados correctamente' });
+            res.status(200).json({ success: true, message: 'Datos verificados correctamente' });
         } else {
-            // Si no se encontró el usuario, enviar respuesta de error
-            res.status(401).send({ success: false, message: 'ID o fecha de nacimiento incorrectos' });
+            res.status(401).json({ success: false, message: 'ID o fecha de nacimiento incorrectos' });
         }
     } catch (err) {
         console.error('Error en la verificación de usuario:', err);
-        res.status(500).send({ success: false, message: 'Error en el servidor' });
+        res.status(500).json({ success: false, message: 'Error en el servidor' });
     } finally {
         sql.close();
     }
 });
 
-// Ruta para la página de éxito
-app.get('/Index', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public', 'Index.html'));
-});
-
+// Ruta para crear una nueva contraseña y realizar login automático
 app.post('/crear-contraseña', async (req, res) => {
     const { Id, new_password } = req.body;
 
+    // Log para verificar que la función fue llamada
+    console.log('Ruta /crear-contraseña fue llamada');
+    console.log('ID recibido:', Id);
+    console.log('Contraseña recibida:', new_password);
+
     try {
         let pool = await sql.connect(dbConfig);
+        console.log('Conexión a la base de datos exitosa');
+
         const request = new sql.Request(pool);
 
-        // Insertar la nueva contraseña en la tabla ContraseñaUsuario
-        const insertQuery = 'INSERT INTO ContraseñaUsuario (Id_Usuario, Crear_Contraseña) VALUES (@Id_Usuario,  @Crear_Contraseña)';
-        await request
-            .input('Id_Usuario', sql.Int, Id)
-            .input('Crear_Contraseña', sql.VarChar(100), new_password)
-            .query(insertQuery);
-
-        // Redirigir a la página de éxito
-        res.redirect('/Index');
+        // Consulta simplificada de inserción
+        const insertQuery = `
+            INSERT INTO ContraseñaUsuario (Id_Usuario, Crear_Contraseña)
+            VALUES (@Id_Usuario, @Crear_Contraseña);
+        `;
+        try {
+            await request
+                .input('Id_Usuario', sql.Int, parseInt(Id, 10))
+                .input('Crear_Contraseña', sql.VarChar(100), new_password)
+                .query('INSERT INTO ContraseñaUsuario (Id_Usuario, Crear_Contraseña) VALUES (@Id_Usuario, @Crear_Contraseña)');
+            console.log('Inserción directa realizada correctamente');
+            res.redirect('/pagina');
+        } catch (err) {
+            console.error('Error al insertar directamente:', err);
+            res.status(500).send('Error en el servidor: ' + err.message);
+        }
     } catch (err) {
-        console.error('Error al crear la contraseña:', err);
+        console.error('Error al crear la contraseña:', err.message);
+        console.error('Detalle completo del error:', err);
         res.status(500).send('Error en el servidor');
     } finally {
         sql.close();
+        console.log('Conexión a la base de datos cerrada');
     }
 });
 
-
-// Ruta para la página de éxito
-app.get('/Index', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public', 'Index.html'));
-});
-
-
 // Ruta para cerrar sesión
 app.post('/CerrarSesion', async (req, res) => {
-    const { IdSalida } = req.body; // Obtener el Id del usuario que va a cerrar sesión
+    const { IdSalida } = req.body;
     const now = new Date();
-
-    console.log('Cierre de sesión para:', IdSalida);
 
     if (loginHashTable.has(IdSalida)) {
         try {
-            let pool = await sql.connect(dbConfig); // Conectar a la base de datos
-            const request = new sql.Request(pool);  // Crear la solicitud
+            let pool = await sql.connect(dbConfig);
+            const request = new sql.Request(pool);
 
-            // Insertar la fecha de salida en la tabla Login
             const insertQuery = 'UPDATE Login SET FechaSalida = @Fecha WHERE IdLogin = @IdLogin';
             await request.input('Fecha', sql.DateTime, now).input('IdLogin', sql.Int, IdSalida).query(insertQuery);
 
-            // Eliminar el IdLogin del Map, ya que se ha cerrado la sesión
             loginHashTable.delete(IdSalida);
-
-            // Redirigir o enviar respuesta indicando éxito en el cierre de sesión
             res.send('Sesión cerrada exitosamente.');
         } catch (err) {
             console.error('Error en la consulta:', err);
             res.status(500).send('Error al cerrar la sesión');
         } finally {
-            sql.close(); // Cerrar la conexión
+            sql.close();
         }
     } else {
-        // Si el Id no está en el Map, significa que no estaba logueado
         res.status(401).send('El usuario no está logueado o ya cerró sesión');
     }
 });
 
-
-// Rutas para las diferentes páginas HTML
+// Rutas para las páginas HTML
 app.get('/pagina', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'Página.html'));
 });
 
-
-app.get('/inicio', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public', 'inicio.html'));
-});
-
-app.get('/videojuego', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public', 'Videojuego.html'));
-});
-
-app.get('/compensaciones', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public', 'compensaciones.html'));
-});
-
-app.get('/calendario', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public', 'calendario.html'));
-});
-
-app.get('/contacto', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public', 'contacto.html'));
-});
+// Otras rutas de páginas...
+app.get('/inicio', (req, res) => res.sendFile(path.join(__dirname, '..', 'public', 'inicio.html')));
+app.get('/videojuego', (req, res) => res.sendFile(path.join(__dirname, '..', 'public', 'Videojuego.html')));
+app.get('/compensaciones', (req, res) => res.sendFile(path.join(__dirname, '..', 'public', 'compensaciones.html')));
+app.get('/calendario', (req, res) => res.sendFile(path.join(__dirname, '..', 'public', 'calendario.html')));
+app.get('/contacto', (req, res) => res.sendFile(path.join(__dirname, '..', 'public', 'contacto.html')));
 
 app.post('/contacto', async (req, res) => {
     const { nombre, idcontacto, areatrabajo, mensaje } = req.body;
 
     try {
-        let pool = await sql.connect(dbConfig); // Conectar a la base de datos
-        const request = new sql.Request(pool);  // Crear la solicitud
+        let pool = await sql.connect(dbConfig);
+        const request = new sql.Request(pool);
 
-        // Consulta de inserción para guardar los datos del formulario
-        const insertQuery = `
-            INSERT INTO Contacto (nombreEmisor, IdContacto, AreaTrabajo, Mensaje, FechaContacto)
-            VALUES (@nombreEmisor, @IdContacto, @AreaTrabajo, @Mensaje, @FechaContacto)
-        `;
-
+        const insertQuery = 'INSERT INTO Contacto (nombreEmisor, IdContacto, AreaTrabajo, Mensaje, FechaContacto) VALUES (@nombreEmisor, @IdContacto, @AreaTrabajo, @Mensaje, @FechaContacto)';
         const now = new Date();
 
-        // Ejecutar la consulta de inserción
         await request
-            .input('nombreEmisor', sql.VarChar, nombre)           // Nombre completo del empleado
-            .input('IdContacto', sql.Int, idcontacto)             // Número de empleado
-            .input('AreaTrabajo', sql.VarChar, areatrabajo)      // Área de trabajo actual
-            .input('Mensaje', sql.VarChar, mensaje)       // Mensaje
-            .input('FechaContacto', sql.DateTime, now)            // Fecha del mensaje
+            .input('nombreEmisor', sql.VarChar, nombre)
+            .input('IdContacto', sql.Int, idcontacto)
+            .input('AreaTrabajo', sql.VarChar, areatrabajo)
+            .input('Mensaje', sql.VarChar, mensaje)
+            .input('FechaContacto', sql.DateTime, now)
             .query(insertQuery);
 
-        // Redirigir a una página de éxito o agradecer el envío
-        res.redirect('/contacto-exitoso'); // Cambia esto a donde quieras redirigir después de enviar
+        res.redirect('/contacto-exitoso');
     } catch (err) {
         console.error('Error al insertar los datos del formulario:', err);
         res.status(500).send('Error al enviar el formulario');
     } finally {
-        sql.close(); // Cerrar la conexión
+        sql.close();
     }
 });
 
-// Ruta para la página de éxito
 app.get('/contacto-exitoso', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'contacto-exitoso.html'));
 });
