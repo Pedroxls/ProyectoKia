@@ -88,20 +88,20 @@
                 console.error('Error en la confirmación de datos:', err);
                 alert('Hubo un error al verificar los datos.');
             });
-            
-            return false;
         }
         
         function createPassword() {
-            const Id_Usuario = document.getElementById('Id_2').value;
-            const Crear_Contraseña = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirm-password').value;
+            const Id_Usuario = document.getElementById('Id_2').value.trim();
+            const Crear_Contraseña = document.getElementById('password').value.trim();
+            const confirmPassword = document.getElementById('confirm-password').value.trim();
             
+            // Verificar que las contraseñas coincidan
             if (Crear_Contraseña !== confirmPassword) {
                 alert('Las contraseñas no coinciden. Por favor, intenta de nuevo.');
                 return false;
             }
             
+            // Realizar la solicitud al servidor para crear la contraseña
             fetch('/crear-contraseña', {
                 method: 'POST',
                 headers: {
@@ -112,24 +112,20 @@
                     new_password: Crear_Contraseña,
                 }),
             })
-            
             .then(response => {
                 if (response.redirected) {
                     window.location.href = response.url;
                 } else {
                     response.text().then(text => {
-                        console.log('Error al crear la contraseña:', text);
+                        console.error('Error al crear la contraseña:', text);
                         alert('Error al crear la contraseña. Por favor, intenta de nuevo.');
                     });
                 }
             })
-            
             .catch(err => {
                 console.error('Error al crear la contraseña:', err);
                 alert('Hubo un error al crear la contraseña.');
             });
-            
-            return false;
         }
         
     </script>
