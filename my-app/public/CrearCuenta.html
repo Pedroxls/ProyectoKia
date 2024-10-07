@@ -88,6 +88,7 @@
                 console.error('Error en la confirmación de datos:', err);
                 alert('Hubo un error al verificar los datos.');
             });
+            return false;
         }
         
         function createPassword() {
@@ -126,6 +127,7 @@
                 console.error('Error al crear la contraseña:', err);
                 alert('Hubo un error al crear la contraseña.');
             });
+            return false;
         }
         
     </script>
