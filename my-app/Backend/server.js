@@ -62,6 +62,7 @@ app.post('/login', async (req, res) => {
 // Ruta para verificar ID y fecha de nacimiento
 app.post('/crear-cuenta', async (req, res) => {
     const { Id, birth_date } = req.body;
+    console.log('Valores recibidos del formulario:', Id, birth_date);
 
     try {
         let pool = await sql.connect(dbConfig);
@@ -102,11 +103,7 @@ app.post('/crear-contraseña', async (req, res) => {
         const request = new sql.Request(pool);
 
         // Consulta simplificada de inserción
-        // Consulta simplificada de inserción
-        const insertQuery = `
-        INSERT INTO ContraseñaUsuario (Id_Usuario, Crear_Contraseña)
-        VALUES (@Id_Usuario, @Crear_Contraseña);
-        `;
+        const insertQuery = 'INSERT INTO ContraseñaUsuario (Id_Usuario, Crear_Contraseña) VALUES (@Id_Usuario, @Crear_Contraseña);';
         
         try {
             await request

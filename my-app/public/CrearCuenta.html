@@ -96,7 +96,11 @@
             const Crear_Contraseña = document.getElementById('password').value.trim();
             const confirmPassword = document.getElementById('confirm-password').value.trim();
             
-            // Verificar que las contraseñas coincidan
+            if (!Id_Usuario || !Crear_Contraseña) {
+                alert('ID y contraseña son obligatorios');
+                return false;
+            }
+            
             if (Crear_Contraseña !== confirmPassword) {
                 alert('Las contraseñas no coinciden. Por favor, intenta de nuevo.');
                 return false;
@@ -113,7 +117,9 @@
                     new_password: Crear_Contraseña,
                 }),
             })
+            
             .then(response => {
+                console.log('Respuesta del servidor:', response);
                 if (response.redirected) {
                     window.location.href = response.url;
                 } else {
@@ -123,10 +129,12 @@
                     });
                 }
             })
+            
             .catch(err => {
                 console.error('Error al crear la contraseña:', err);
                 alert('Hubo un error al crear la contraseña.');
             });
+            
             return false;
         }
         
