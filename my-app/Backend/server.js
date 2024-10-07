@@ -105,26 +105,19 @@ app.post('/crear-contraseña', async (req, res) => {
         // Consulta simplificada de inserción
         const insertQuery = 'INSERT INTO ContraseñaUsuario (Id_Usuario, Crear_Contraseña) VALUES (@Id_Usuario, @Crear_Contraseña);';
         
-        try {
-            await request
-            .input('Id_Usuario', sql.Int, parseInt(Id, 10))
+        await request
+            .input('Id_Usuario', sql.Int, parseInt(Id,10))
             .input('Crear_Contraseña', sql.VarChar(100), new_password)
-            .query(insertQuery); // Usar la variable 'insertQuery' aquí
-            console.log('Inserción directa realizada correctamente');
+            .query(insertQuery);
             res.redirect('/pagina');
         } catch (err) {
-            console.error('Error al insertar directamente:', err);
-            res.status(500).send('Error en el servidor: ' + err.message);
+            console.error('Error al crear la contraseña:', err.message);
+            console.error('Detalle completo del error:', err);
+            res.status(500).send('Error en el servidor');
+        } finally {
+            sql.close();
+            console.log('Conexión a la base de datos cerrada');
         }
-    
-    } catch (err) {
-        console.error('Error al crear la contraseña:', err.message);
-        console.error('Detalle completo del error:', err);
-        res.status(500).send('Error en el servidor');
-    } finally {
-        sql.close();
-        console.log('Conexión a la base de datos cerrada');
-    }
 });
 
 // Ruta para cerrar sesión
