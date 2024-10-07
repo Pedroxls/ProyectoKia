@@ -109,7 +109,9 @@ app.post('/crear-contraseña', async (req, res) => {
             .input('Id_Usuario', sql.Int, parseInt(Id,10))
             .input('Crear_Contraseña', sql.VarChar(100), new_password)
             .query(insertQuery);
-            res.redirect('/pagina');
+            
+        res.redirect('/pagina');
+
         } catch (err) {
             console.error('Error al crear la contraseña:', err.message);
             console.error('Detalle completo del error:', err);
