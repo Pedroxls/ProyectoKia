@@ -102,21 +102,24 @@ app.post('/crear-contraseña', async (req, res) => {
         const request = new sql.Request(pool);
 
         // Consulta simplificada de inserción
+        // Consulta simplificada de inserción
         const insertQuery = `
-            INSERT INTO ContraseñaUsuario (Id_Usuario, Crear_Contraseña)
-            VALUES (@Id_Usuario, @Crear_Contraseña);
+        INSERT INTO ContraseñaUsuario (Id_Usuario, Crear_Contraseña)
+        VALUES (@Id_Usuario, @Crear_Contraseña);
         `;
+        
         try {
             await request
-                .input('Id_Usuario', sql.Int, parseInt(Id, 10))
-                .input('Crear_Contraseña', sql.VarChar(100), new_password)
-                .query('INSERT INTO ContraseñaUsuario (Id_Usuario, Crear_Contraseña) VALUES (@Id_Usuario, @Crear_Contraseña)');
+            .input('Id_Usuario', sql.Int, parseInt(Id, 10))
+            .input('Crear_Contraseña', sql.VarChar(100), new_password)
+            .query(insertQuery); // Usar la variable 'insertQuery' aquí
             console.log('Inserción directa realizada correctamente');
             res.redirect('/pagina');
         } catch (err) {
             console.error('Error al insertar directamente:', err);
             res.status(500).send('Error en el servidor: ' + err.message);
         }
+    
     } catch (err) {
         console.error('Error al crear la contraseña:', err.message);
         console.error('Detalle completo del error:', err);
