@@ -90,6 +90,35 @@ app.post('/crear-cuenta', async (req, res) => {
     }
 });
 
+// Ruta para verificar ID y fecha de nacimiento
+app.post('/admin_login', async (req, res) => {
+    const { adminId, adminPassword } = req.body;
+    console.log('Valores recibidos del formulario:', adminId, adminPassword);
+
+    try {
+        let pool = await sql.connect(dbConfig);
+        const request = new sql.Request(pool);
+
+        const query = 'SELECT * FROM UsuarioAdministrador WHERE Id_Administracion = @Id_Administracion AND Contraseña = @Contraseña';
+        const result = await request
+            .input('Id_Administracion', sql.Int, adminId)
+            .input('Contraseña', sql.VarChar(100), adminPassword)
+            .query(query);
+
+        if (result.recordset.length > 0) {
+            res.redirect('/pagina');
+            return; 
+        } else {
+            res.status(401).json({ success: false, message: 'ID o contraseña incorrectos' });
+        }
+    } catch (err) {
+        console.error('Error en la verificación de usuario:', err);
+        res.status(500).json({ success: false, message: 'Error en el servidor' });
+    } finally {
+        sql.close();
+    }
+});
+
 // Ruta para crear una nueva contraseña y realizar login automático
 app.post('/crear-contrasena', async (req, res) => {
     console.log('Cuerpo de la solicitud:', req.body);
