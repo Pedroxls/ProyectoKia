@@ -37,12 +37,12 @@
             </form>
             
             <!-- Paso 2: Creación de contraseña (oculto inicialmente) -->
-            <form id="step-2-form" style="display: none;" onsubmit="return createPassword()" method="post">
+            <form action="/crear-contrasena" id="step-2-form" style="display: none;" method="post">
                 <label for="Id_2">Id corporativo</label>
                 <input type="text" name="Id" id="Id_2" placeholder="Introduce tu id corporativo" required readonly>
-
+            
                 <label for="password">Contraseña</label>
-                <input type="password" name="password" id="password" required placeholder="Ingresa tu contraseña">
+                <input type="password" name="new_password" id="password" required placeholder="Ingresa tu contraseña">
                 
                 <label for="confirm-password">Confirmar Contraseña</label>
                 <input type="password" name="confirm-password" id="confirm-password" required placeholder="Confirma tu contraseña">
@@ -91,52 +91,22 @@
             return false;
         }
         
-        function createPassword() {
+        document.getElementById('step-2-form').addEventListener('submit', function (event) {
             const Id_Usuario = document.getElementById('Id_2').value;
             const Crear_Contraseña = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirm-password').value;
             
             if (!Id_Usuario || !Crear_Contraseña) {
                 alert('ID y contraseña son obligatorios');
-                return false;
+                event.preventDefault(); // Evita que el formulario se envíe
+                return;
             }
             
             if (Crear_Contraseña !== confirmPassword) {
                 alert('Las contraseñas no coinciden. Por favor, intenta de nuevo.');
-                return false;
+                event.preventDefault(); // Evita que el formulario se envíe
             }
-            
-            // Realizar la solicitud al servidor para crear la contraseña
-            fetch('/crear-contraseña', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    Id: Id_Usuario,
-                    new_password: Crear_Contraseña,
-                }),
-            })
-            
-            .then(response => {
-                console.log('Respuesta del servidor:', response);
-                if (response.redirected) {
-                    window.location.href = response.url;
-                } else {
-                    response.text().then(text => {
-                        console.error('Error al crear la contraseña:', text);
-                        alert('Error al crear la contraseña. Por favor, intenta de nuevo.');
-                    });
-                }
-            })
-            
-            .catch(err => {
-                console.error('Error al crear la contraseña:', err);
-                alert('Hubo un error al crear la contraseña.');
-            });
-            
-            return false;
-        }
+        });
         
     </script>
 </body>

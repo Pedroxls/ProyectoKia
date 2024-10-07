@@ -91,7 +91,8 @@ app.post('/crear-cuenta', async (req, res) => {
 });
 
 // Ruta para crear una nueva contraseña y realizar login automático
-app.post('/crear-contraseña', async (req, res) => {
+app.post('/crear-contrasena', async (req, res) => {
+    console.log('Cuerpo de la solicitud:', req.body);
     const { Id, new_password } = req.body;
 
     // Log para verificar que la función fue llamada
