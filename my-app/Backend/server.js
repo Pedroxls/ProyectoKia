@@ -12,10 +12,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Configuración de la base de datos para SQL Server
 const dbConfig = {
-    user: 'administrador',
-    password: 'Kia_79123',
-    server: 'servidorsql-kia.database.windows.net',
-    database: 'KiaData',
+    user: 'Administracion',
+    password: 'Kia12345',
+    server: 'kia-data.database.windows.net',
+    database: 'KiaDataBase',
     options: {
         encrypt: true,
         enableArithAbort: true
