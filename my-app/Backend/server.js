@@ -155,6 +155,32 @@ app.post('/crear-contrasena', async (req, res) => {
         }
 });
 
+// Ruta para actualizar la contraseña (Olvidar Contraseña)
+app.post('/reset_password', async (req, res) => {
+    const { Id, newPassword } = req.body;
+    console.log('Valores recibidos del formulario:', Id, newPassword);
+
+    try {
+        let pool = await sql.connect(dbConfig);
+        const request = new sql.Request(pool);
+
+        // Actualizar la contraseña para el ID especificado
+        const updateQuery = 'UPDATE ContraseñaUsuario SET Crear_Contraseña = @Crear_Contraseña WHERE Id_Usuario = @Id_Usuario';
+        await request
+            .input('Id_Usuario', sql.Int, Id)
+            .input('Crear_Contraseña', sql.VarChar(100), newPassword)
+            .query(updateQuery);
+
+        // Redirigir al inicio de sesión
+        res.redirect('/pagina'); // Asegúrate de que esta ruta sea la correcta para tu inicio de sesión.
+    } catch (err) {
+        console.error('Error al actualizar la contraseña:', err);
+        res.status(500).send('Error al actualizar la contraseña');
+    } finally {
+        sql.close();
+    }
+});
+
 // Ruta para cerrar sesión
 app.post('/CerrarSesion', async (req, res) => {
     const { IdSalida } = req.body;
