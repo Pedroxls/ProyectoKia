@@ -90,7 +90,7 @@ app.post('/crear-cuenta', async (req, res) => {
     }
 });
 
-// Ruta para verificar ID y fecha de nacimiento
+// Ruta para verificar ID y contraseña de administrador
 app.post('/admin_login', async (req, res) => {
     const { adminId, adminPassword } = req.body;
     console.log('Valores recibidos del formulario:', adminId, adminPassword);
@@ -106,8 +106,7 @@ app.post('/admin_login', async (req, res) => {
             .query(query);
 
         if (result.recordset.length > 0) {
-            res.redirect('/pagina');
-            return; 
+            res.redirect('/admin_dashboard.html'); // Redirigir a la página de administración
         } else {
             res.status(401).json({ success: false, message: 'ID o contraseña incorrectos' });
         }
@@ -248,6 +247,46 @@ app.post('/contacto', async (req, res) => {
 
 app.get('/contacto-exitoso', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'contacto-exitoso.html'));
+});
+
+// Ruta para obtener todos los usuarios de la base de datos
+app.get('/get-users', async (req, res) => {
+    try {
+        let pool = await sql.connect(dbConfig);
+        const request = new sql.Request(pool);
+
+        // Consulta para obtener todos los usuarios
+        const query = 'SELECT Id_Usuario, Crear_Contraseña FROM ContraseñaUsuario';
+        const result = await request.query(query);
+
+        // Enviar la lista de usuarios como respuesta en formato JSON
+        res.json(result.recordset);
+    } catch (err) {
+        console.error('Error al obtener los usuarios:', err);
+        res.status(500).send('Error en el servidor');
+    } finally {
+        sql.close();
+    }
+});
+
+// Ruta para eliminar un usuario de la base de datos por su ID
+app.delete('/delete-user/:id', async (req, res) => {
+    const userId = req.params.id;
+    try {
+        let pool = await sql.connect(dbConfig);
+        const request = new sql.Request(pool);
+
+        // Consulta para eliminar el usuario
+        const query = 'DELETE FROM ContraseñaUsuario WHERE Id_Usuario = @Id_Usuario';
+        await request.input('Id_Usuario', sql.Int, userId).query(query);
+
+        res.status(200).send('Usuario eliminado correctamente');
+    } catch (err) {
+        console.error('Error al eliminar el usuario:', err);
+        res.status(500).send('Error en el servidor');
+    } finally {
+        sql.close();
+    }
 });
 
 // Iniciar el servidor
