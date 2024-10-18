@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Videojuego | Proyect Test</title>
+    <link rel="icon" href="kiablanco.ico" />
+    <link rel="stylesheet" href="TemplateData/style.css">
+</head>
+<body>
+
+    <!-- Navigation bar with logo and links -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="Página.html" target="_blank">
+                    <img src="1/kiablanco.png" alt="KIA Logo">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="pagina.html">Inicio</a></li>
+                <li><a href="Videojuego.html">Videojuego</a></li>
+                <li><a href="compensaciones.html">Compensaciones</a></li>
+                <li><a href="calendario.html">Calendario</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+            <div class="top-right-links">
+                <a href="index.html">Cerrar Sesión</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main section with Unity WebGL player -->
+    <main>
+        <section class="slogan">
+            <h1>Videojuego</h1>
+            <h2>Diviértete y aprende sobre tus compensaciones y beneficios dentro de Kia</h2>
+        </section>
+
+    
+
+        <div id="unity-container" class="unity-desktop">
+            <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
+            <div id="unity-loading-bar">
+                <div id="unity-logo"></div>
+                <div id="unity-progress-bar-empty">
+                    <div id="unity-progress-bar-full"></div>
+                </div>
+            </div>
+            <div id="unity-warning"></div>
+            <div id="unity-footer">
+                <div id="unity-webgl-logo"></div>
+                <div id="unity-fullscreen-button"></div>
+                <div id="unity-build-title">Proyect Test</div>
+            </div>
+        </div>
+
+        <section class="chatbox">
+            <p>¿Necesitas ayuda? ¡Estamos aquí para ayudarte!</p>
+            <button class="chat-button">Chatear Ahora</button>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>Este sitio utiliza cookies para mejorar tu experiencia de usuario. Para más información consulta nuestra <a href="#">Política de Cookies</a>.</p>
+    </footer>
+
+    <script>
+      var container = document.querySelector("#unity-container");
+      var canvas = document.querySelector("#unity-canvas");
+      var loadingBar = document.querySelector("#unity-loading-bar");
+      var progressBarFull = document.querySelector("#unity-progress-bar-full");
+      var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+      var warningBanner = document.querySelector("#unity-warning");
+
+      function unityShowBanner(msg, type) {
+        function updateBannerVisibility() {
+          warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
+        }
+        var div = document.createElement('div');
+        div.innerHTML = msg;
+        warningBanner.appendChild(div);
+        if (type == 'error') div.style = 'background: red; padding: 10px;';
+        else {
+          if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
+          setTimeout(function() {
+            warningBanner.removeChild(div);
+            updateBannerVisibility();
+          }, 5000);
+        }
+        updateBannerVisibility();
+      }
+
+      var buildUrl = "Build";
+      var loaderUrl = buildUrl + "/Juego-WEB.loader.js";
+      var config = {
+        dataUrl: buildUrl + "/Juego-WEB.data.gz",
+        frameworkUrl: buildUrl + "/Juego-WEB.framework.js.gz",
+        codeUrl: buildUrl + "/Juego-WEB.wasm.gz",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "Proyect Test",
+        productVersion: "0.1",
+        showBanner: unityShowBanner,
+      };
+
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        var meta = document.createElement('meta');
+        meta.name = 'viewport';
+        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+        document.getElementsByTagName('head')[0].appendChild(meta);
+        container.className = "unity-mobile";
+        canvas.className = "unity-mobile";
+      } else {
+        canvas.style.width = "960px";
+        canvas.style.height = "600px";
+      }
+
+      loadingBar.style.display = "block";
+
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          progressBarFull.style.width = 100 * progress + "%";
+        }).then((unityInstance) => {
+          loadingBar.style.display = "none";
+          fullscreenButton.onclick = () => {
+            unityInstance.SetFullscreen(1);
+          };
+        }).catch((message) => {
+          alert(message);
+        });
+      };
+
+      document.body.appendChild(script);
+    </script>
+</body>
+</html>

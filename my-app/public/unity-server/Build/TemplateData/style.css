@@ -1,0 +1,329 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Kia Signature OTF', sans-serif;
+}
+
+body {
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+    overflow-x: hidden; 
+    padding: 0;
+    margin: 0;
+}
+
+header {
+    background-color: #000; 
+    padding: 0rem 2rem;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.logo img {
+    width: 150px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #f3c200; 
+}
+
+.top-right-links {
+    display: flex;
+    align-items: center;
+}
+
+.top-right-links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    background-color: #e74c3c;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    align-items: center;
+}
+
+.top-right-links a:hover {
+    background-color: #c0392b;
+}
+
+.slogan {
+    padding: 2rem;
+    background-color: #e0e0e0;
+    text-align: center;
+}
+
+.slogan h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.slogan h2 {
+    font-size: 1.5rem;
+    color: #555;
+    font-weight: normal;
+}
+
+.banner {
+    background-color: #fff;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; 
+}
+
+.banner-content {
+    display: flex;
+    align-items: center;
+    width: 120%;
+    max-width: 550px; 
+    margin: 0 auto; 
+}
+
+.banner .text {
+    max-width: 500px;
+    margin-right: 3rem; 
+}
+
+.banner .text h1 {
+    font-size: 2.5rem;
+    color: #444;
+    font-weight: bold;
+    margin-bottom: 1rem; 
+}
+
+.banner .text p {
+    font-size: 1.2rem;
+    color: #777;
+    font-weight: normal;
+}
+
+.banner .image img {
+    max-width: 900px;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
+}
+
+.discover-kia {
+    position: absolute;
+    top: 20%;
+    right: 10%;
+    background-color: #f3c200; 
+    color: #fff;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
+}
+
+.discover-kia:hover {
+    background-color: #e2b600; 
+}
+
+.chatbox {
+    background-color: #05141f;
+    color: #fff;
+    text-align: center;
+    padding: 20px 20px;
+}
+
+.chatbox p {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.chat-button {
+    background-color: #e74c3c;
+    color: #fff;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.chat-button:hover {
+    background-color: #c0392b;
+}
+
+footer {
+    background-color: #05141f;
+    color: #fff;
+    padding: 0.5rem;
+    text-align: center;
+    margin-top: 0;
+}
+
+footer a {
+    color: #8BB532;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+.nav-links li a {
+    color: #ffffff; 
+    text-decoration: none; 
+    font-weight: bold; 
+    font-size: 2rem; 
+    transition: color 0.3s ease; 
+}
+
+.nav-links li a:hover {
+    color: #18bc9c; 
+}
+
+@media (max-width: 768px) {
+    .banner-content {
+      flex-direction: column; 
+      align-items: center;
+      text-align: center;
+    }
+
+    .banner .text {
+      margin-right: 0; 
+    }
+
+    .banner .image img {
+      margin-left: 0; 
+      margin-top: 2rem; 
+    }
+
+    .discover-kia {
+      top: 50%;
+      right: 50%;
+      transform: translate(50%, -50%); 
+    }
+}
+
+#unity-container {
+    position: center; /* Changed from absolute */
+    margin-top: 20px; /* Added margin to push it lower on the page */
+}
+
+#unity-container.unity-desktop {
+    left: 50%;
+    top: 50%;
+    transform: translate(-0%,0%);
+}
+
+#unity-container.unity-mobile {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+#unity-canvas {
+    background: #231F20;
+}
+
+.unity-mobile #unity-canvas {
+    width: 100%;
+    height: 100%;
+}
+
+#unity-loading-bar {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+}
+
+#unity-logo {
+    width: 154px;
+    height: 130px;
+    background: url('unity-logo-dark.png') no-repeat center;
+}
+
+#unity-progress-bar-empty {
+    width: 141px;
+    height: 18px;
+    margin-top: 10px;
+    margin-left: 6.5px;
+    background: url('progress-bar-empty-dark.png') no-repeat center;
+}
+
+#unity-progress-bar-full {
+    width: 0%;
+    height: 18px;
+    margin-top: 10px;
+    background: url('progress-bar-full-dark.png') no-repeat center;
+}
+
+#unity-footer {
+    position: relative;
+}
+
+.unity-mobile #unity-footer {
+    display: none;
+}
+
+#unity-webgl-logo {
+    float: left;
+    width: 204px;
+    height: 38px;
+    background: url('webgl-logo.png') no-repeat center;
+}
+
+#unity-build-title {
+    float: right;
+    margin-right: 10px;
+    line-height: 38px;
+    font-family: arial;
+    font-size: 18px;
+}
+
+#unity-fullscreen-button {
+    cursor: pointer;
+    float: right;
+    width: 38px;
+    height: 38px;
+    background: url('fullscreen-button.png') no-repeat center;
+}
+
+#unity-warning {
+    position: absolute;
+    left: 50%;
+    top: 5%;
+    transform: translate(-50%);
+    background: white;
+    padding: 10px;
+    display: none;
+}
